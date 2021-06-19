@@ -1,4 +1,5 @@
 import 'package:fanpage/services/auth.dart';
+import 'package:fanpage/shared/constants.dart';
 import 'package:flutter/material.dart';
 
 class SignIn extends StatefulWidget {
@@ -44,6 +45,7 @@ class _SignInState extends State<SignIn> {
                 children: <Widget>[
                   SizedBox(height: 20.0),
                   TextFormField(
+                    decoration: textInputDecoration.copyWith(hintText: 'Email'),
                     validator: (val) {
                       return (val?.isEmpty as bool) ? 'Enter and email' : null;
                     },
@@ -55,6 +57,8 @@ class _SignInState extends State<SignIn> {
                   ),
                   SizedBox(height: 20.0),
                   TextFormField(
+                    decoration:
+                        textInputDecoration.copyWith(hintText: 'Password'),
                     obscureText: true,
                     validator: (val) {
                       return (val?.length as int) < 6

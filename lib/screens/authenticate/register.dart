@@ -1,4 +1,5 @@
 import 'package:fanpage/services/auth.dart';
+import 'package:fanpage/shared/constants.dart';
 import 'package:flutter/material.dart';
 
 class Register extends StatefulWidget {
@@ -42,6 +43,7 @@ class _RegisterState extends State<Register> {
                 children: <Widget>[
                   SizedBox(height: 20.0),
                   TextFormField(
+                    decoration: textInputDecoration.copyWith(hintText: 'Email'),
                     validator: (val) {
                       return (val?.isEmpty as bool) ? 'Enter and email' : null;
                     },
@@ -53,6 +55,7 @@ class _RegisterState extends State<Register> {
                   ),
                   SizedBox(height: 20.0),
                   TextFormField(
+                    decoration: textInputDecoration.copyWith(hintText: 'Password'),
                     obscureText: true,
                     validator: (val) {
                       return (val?.length as int) < 6
