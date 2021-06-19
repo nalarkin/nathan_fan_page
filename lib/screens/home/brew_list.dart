@@ -15,8 +15,13 @@ class _BrewListState extends State<BrewList> {
   Widget build(BuildContext context) {
     // final brews = Provider.of<QuerySnapshot>(context);
     final brews = Provider.of<User?>(context);
-    print(brews?.email);
-    print(brews?.uid);
+
+    // print(brews?.email);
+    // print(brews?.uid);
+    for (var docs in brews?.providerData as List) {
+      print(docs.toString());
+      print('line2 in for loop');
+    }
     return Container();
   }
 }
