@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "510530156552",
+    "project_id": "fan-page-app-nlarkin",
+    "storage_bucket": "fan-page-app-nlarkin.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:510530156552:android:0052b12ec76c6840f7b9bd",
+        "android_client_info": {
+          "package_name": "com.nlarkin1.fanpage"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "510530156552-tvsufrn5840aofidp8sk3mh0biqutal1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBkHohaZcG7kITIITy62XW9St6sUpu3ECI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "510530156552-tvsufrn5840aofidp8sk3mh0biqutal1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
