@@ -1,4 +1,5 @@
 import 'package:fanpage/models/user.dart';
+import 'package:fanpage/services/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {
@@ -29,6 +30,7 @@ class AuthService {
       return null;
     }
   }
+
   // sign in with email and password
   Future signInWithEmailAndPassword(String email, String password) async {
     try {
@@ -48,6 +50,8 @@ class AuthService {
       UserCredential result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       User? currUser = result.user;
+      await DatabaseService(uid: currUser?.uid as String)
+          .updateUserData('0', 'new crew memeber', 100);
       return _userFromFirebase(currUser);
     } catch (e) {
       print(e.toString());
