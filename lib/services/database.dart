@@ -7,6 +7,7 @@ class DatabaseService {
   // collection reference
   final CollectionReference brewCollection =
       FirebaseFirestore.instance.collection('brews');
+    final QuerySnapshot<
 
   Future updateUserData(String sugars, String name, int strength) async {
     return await brewCollection.doc(uid).set({
@@ -14,5 +15,12 @@ class DatabaseService {
       'name': name,
       'strength': strength,
     });
+  }
+
+  // get brews stream
+  Stream<QuerySnapshot> get brews {
+    // FirebaseFirestore.instance.
+    brewCollection.noSuchMethod(invocation)
+    return brewCollection.snapshots();
   }
 }
