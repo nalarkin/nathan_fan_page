@@ -1,4 +1,5 @@
 import 'package:fanpage/models/brew.dart';
+import 'package:fanpage/screens/home/brew_tile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -25,6 +26,11 @@ class _BrewListState extends State<BrewList> {
     // print(brews?.email);
     // print(brews?.uid);
 
-    return Container();
+    return ListView.builder(
+      itemBuilder: (context, index) {
+        return BrewTile(brew: brews[index]);
+      },
+      itemCount: brews.length,
+    );
   }
 }
