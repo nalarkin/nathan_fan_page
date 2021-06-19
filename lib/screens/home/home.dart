@@ -1,3 +1,4 @@
+import 'package:fanpage/models/brew.dart';
 import 'package:fanpage/services/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -9,13 +10,14 @@ import 'package:fanpage/screens/home/brew_list.dart';
 class Home extends StatelessWidget {
   // const Home({Key? key}) : super(key: key);
   final AuthService _auth = AuthService();
-  final initial = DatabaseService(uid: 'null');
+  // final initial = DatabaseService(uid: 'null');
+  final List<Brew> initial = [Brew()];
 
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<User?>.value(
-      value: FirebaseAuth.instance.authStateChanges(),
-      initialData: null,
+    return StreamProvider<List<Brew>>.value(
+      value: DatabaseService().brews,
+      initialData: initial,
       child: Scaffold(
         backgroundColor: Colors.brown[50],
         appBar: AppBar(

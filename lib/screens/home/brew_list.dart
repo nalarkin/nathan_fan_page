@@ -1,3 +1,4 @@
+import 'package:fanpage/models/brew.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -14,14 +15,16 @@ class _BrewListState extends State<BrewList> {
   @override
   Widget build(BuildContext context) {
     // final brews = Provider.of<QuerySnapshot>(context);
-    final brews = Provider.of<User?>(context);
+    final brews = Provider.of<List<Brew>>(context);
+    brews.forEach((brew) {
+      print(brew.name);
+      print(brew.sugars);
+      print(brew.strength);
+    });
 
     // print(brews?.email);
     // print(brews?.uid);
-    for (var docs in brews?.providerData as List) {
-      print(docs.toString());
-      print('line2 in for loop');
-    }
+
     return Container();
   }
 }
