@@ -1,4 +1,5 @@
 import 'package:fanpage/services/auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fanpage/services/database.dart';
 import 'package:provider/provider.dart';
@@ -12,8 +13,8 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<QuerySnapshot>.value(
-      value: DatabaseService(uid: 'null').brews,
+    return StreamProvider<User?>.value(
+      value: FirebaseAuth.instance.authStateChanges(),
       initialData: null,
       child: Scaffold(
         backgroundColor: Colors.brown[50],
