@@ -74,13 +74,13 @@ class _SignInState extends State<SignIn> {
                       onPressed: () async {
                         if (_formKey.currentState?.validate() as bool) {
                           dynamic result = await _auth
-                              .registerWithEmailAndPassword(email, password);
-                          print('valid');
-                          // if (result == null) {
-                          //   setState(() {
-                          //     error = 'register with a valid email';
-                          //   });
-                          // }
+                              .signInWithEmailAndPassword(email, password);
+
+                          if (result == null) {
+                            setState(() {
+                              error = 'Incorrect login and/or password.';
+                            });
+                          }
                         }
                       },
                       child: Text(
