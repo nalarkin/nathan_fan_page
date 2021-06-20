@@ -19,45 +19,12 @@ class _MessageFormState extends State<MessageForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-        key: _formKey,
-        child: Column(
-          children: <Widget>[
-            Text(
-              'Create a message.',
-              style: TextStyle(fontSize: 18.0),
-            ),
-            SizedBox(height: 20.0),
-            TextFormField(
-              // expands: true,
-              // minLines: 1,
-              // maxLines: 10,
-              decoration: textInputDecoration,
-              validator: (val) {
-                return (val?.length as int) < 6
-                    ? 'Message must be at least 6 characters.'
-                    : null;
-              },
-              onChanged: (val) => setState(() {
-                _content = val;
-                _author = 'dummyAuthor';
-                _date = DateTime.now();
-              }),
-            ),
-            SizedBox(
-              height: 20.0,
-            ),
-            ElevatedButton(
-                onPressed: () async {
-                  print("content is $_content");
-                  print("author is $_author");
-                  print("date is ${_date.toString()}");
-                },
-                child: Text(
-                  'Update',
-                  style: TextStyle(color: Colors.white),
-                ))
-          ],
-        ));
+    return Expanded(
+      child: TextField(
+        decoration: textInputDecoration,
+        scrollPadding: EdgeInsets.all(20.0),
+        autofocus: true,
+      ),
+    );
   }
 }
