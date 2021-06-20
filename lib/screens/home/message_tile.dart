@@ -18,8 +18,8 @@ class MessageTile extends StatelessWidget {
               radius: 25.0,
               backgroundColor: Colors.brown[500],
             ),
-            title: Text(message.date as String),
-            subtitle: Text('Message Content could go here.'),
+            title: Text(message.date.toDate().toString()),
+            subtitle: Text(message.content),
           ),
         ));
   }

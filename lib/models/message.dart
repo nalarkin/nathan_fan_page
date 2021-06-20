@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Message {
-  final DateTime? date;
+  final Timestamp date;
   final String content;
 
-  Message({this.date, this.content = ''});
+  Message({required this.date, this.content = ''});
 }

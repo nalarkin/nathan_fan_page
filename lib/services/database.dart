@@ -15,6 +15,7 @@ class DatabaseService {
 
   final CollectionReference messageCollection =
       FirebaseFirestore.instance.collection('messages');
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
   // final QuerySnapshot<
 
   // Future updateUserData(String sugars, String name, int strength) async {
@@ -45,6 +46,26 @@ class DatabaseService {
   }
 
   // brew list from snapshot
+  // List<Message> _messageListFromSnapshot(QuerySnapshot snapshot) {
+  //   return snapshot.docs.map((doc) {
+  //     try {
+  //       // Future<QuerySnapshot<Object?>> _allDocs = brewCollection.get();
+  //       // _allDocs.then((QueryDocumentSnapshot) =>
+  //       //     QueryDocumentSnapshot.docs.forEach((doc) {
+  //       //       print(doc.id + " " + doc.data().toString());
+  //       //     }));
+  //       print(doc.exists);
+  //       print(doc.toString());
+  //       print(doc.data());
+  //       return Message(content: doc.get('content'), date: doc.get('date'));
+  //     } catch (e) {
+  //       print(e);
+  //       return Message(content: 'null_content', date: Timestamp.now());
+
+  //     }
+  //   }).toList();
+  // }
+
   List<Message> _messageListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.docs.map((doc) {
       try {
@@ -53,11 +74,13 @@ class DatabaseService {
         //     QueryDocumentSnapshot.docs.forEach((doc) {
         //       print(doc.id + " " + doc.data().toString());
         //     }));
-
+        print(doc.exists);
+        print(doc.toString());
+        print(doc.data());
         return Message(content: doc.get('content'), date: doc.get('date'));
       } catch (e) {
         print(e);
-        return Message(content: 'null_content', date: DateTime.now());
+        return Message(content: 'null_content', date: Timestamp.now());
       }
     }).toList();
   }

@@ -26,7 +26,7 @@ class Home extends StatelessWidget {
   // const Home({Key? key}) : super(key: key);
   final AuthService _auth = AuthService();
   // final initial = DatabaseService(uid: 'null');
-  final List<Message> initial = [Message()];
+  final List<Message> initial = [Message(date: Timestamp.now())];
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +77,7 @@ class Home extends StatelessWidget {
           ],
         ),
         body: Center(
-          child: Column(children: []),
+          child: Messages(),
         ),
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
