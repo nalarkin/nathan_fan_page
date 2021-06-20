@@ -6,7 +6,9 @@ class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   TheUser? _userFromFirebase(User? user) {
-    return user != null ? TheUser(uid: user.uid) : null;
+    return user != null
+        ? TheUser(uid: user.uid, registrationDate: user.metadata.creationTime)
+        : null;
     // return TheUser(uid: user.uid);
   }
 
@@ -51,7 +53,7 @@ class AuthService {
           email: email, password: password);
       User? currUser = result.user;
       await DatabaseService(uid: currUser?.uid as String)
-          .updateUserData('0', 'new crew memeber', 100);
+          .setUserData('dummyFirst', 'dummyLast', 'dummyRole');
       return _userFromFirebase(currUser);
     } catch (e) {
       print(e.toString());
