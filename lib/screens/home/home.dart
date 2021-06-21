@@ -30,19 +30,6 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void _createMessage() {
-      showModalBottomSheet(
-          context: context,
-          builder: (context) {
-            return Container(
-              padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
-              // height: 800.0,
-              child: MessageForm(),
-              // alignment: Alignment.center,
-            );
-          });
-    }
-
     void _showSettingsPanel() {
       showModalBottomSheet(
           context: context,
@@ -52,6 +39,38 @@ class Home extends StatelessWidget {
               child: SettingsForm(),
             );
           });
+    }
+
+
+    void _confirmationExit() {
+      Widget cancelButton = TextButton(
+        child: Text("Cancel"),
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+      );
+      Widget continueButton = TextButton(
+        child: Text("Logout"),
+        onPressed: () async {
+          Navigator.of(context).pop();
+          await _auth.signOut();
+        },
+      );
+
+      AlertDialog alert = AlertDialog(
+        content: Text("Are you sure you want to logout?"),
+        actions: [
+          cancelButton,
+          continueButton,
+        ],
+      );
+
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alert;
+        },
+      );
     }
 
     return StreamProvider<List<Message>>.value(
@@ -66,7 +85,8 @@ class Home extends StatelessWidget {
           actions: <Widget>[
             TextButton.icon(
                 onPressed: () async {
-                  await _auth.signOut();
+                  _confirmationExit();
+                  // await _auth.signOut();
                 },
                 icon: Icon(Icons.person),
                 label: Text('logout')),
@@ -87,20 +107,6 @@ class Home extends StatelessWidget {
               MaterialPageRoute(builder: (context) => SecondRoute()),
             );
           },
-          // body: MessageList(),
-          // body: const MyStatelessWidget(),
-          // floatingActionButton: FloatingActionButton(
-          //   child: Icon(Icons.add),
-          //   onPressed: () {
-          //     Navigator.of(context).push(createRoute1());
-          //   },
-          // )
-          // floatingActionButton: FloatingActionButton(
-          //   onPressed: () {
-          //     // _createMessage();
-          //   },
-          //   child: Icon(Icons.add),
-          // ),
         ),
       ),
     );
@@ -177,93 +183,30 @@ class _SecondRouteState extends State<SecondRoute> {
   }
 }
 
-// bottomSheet widget
-// class MyStatelessWidget extends StatelessWidget {
-//   const MyStatelessWidget({Key? key}) : super(key: key);
+class ConfirmationExit extends StatelessWidget {
+  const ConfirmationExit({Key? key}) : super(key: key);
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Center(
-//       child: FloatingActionButton(
-//         child: Icon(Icons.add),
-//         onPressed: () {
-//           Scaffold.of(context).showBottomSheet<void>(
-//             (BuildContext context) {
-//               return Container(
-//                 height: 600.0,
-//                 color: Colors.amber,
-//                 child: Center(
-//                   child: Column(
-//                     mainAxisAlignment: MainAxisAlignment.center,
-//                     mainAxisSize: MainAxisSize.min,
-//                     children: <Widget>[
-//                       const Text('BottomSheet'),
-//                       ElevatedButton(
-//                           child: const Text('Close BottomSheet'),
-//                           onPressed: () {
-//                             Navigator.pop(context);
-//                           })
-//                     ],
-//                   ),
-//                 ),
-//               );
-//             },
-//           );
-//         },
-//       ),
-//     );
-//   }
-// }
-/// This is the stateless widget that the main application instantiates.
-// class MyStatelessWidget extends StatefulWidget {
-//   const MyStatelessWidget({Key? key}) : super(key: key);
-//   @override
-//   _MyStatelessWidgetState createState() => _MyStatelessWidgetState();
-// }
-
-// class _MyStatelessWidgetState extends State<MyStatelessWidget> {
-//   final _formKey = GlobalKey<FormState>();
-//   @override
-//   Widget build(BuildContext context) {
-//     return TextButton(
-//       onPressed: () => showDialog<String>(
-//         context: context,
-//         builder: (BuildContext context) => AlertDialog(
-//           title: const Text('AlertDialog Title'),
-//           content: Expanded(
-//             child: TextField(),
-//           ),
-//           // content: const Text('AlertDialog description'),
-//           actions: <Widget>[
-//             TextButton(
-//               onPressed: () => Navigator.pop(context, 'Cancel'),
-//               child: const Text('Cancel'),
-//             ),
-//             TextButton(
-//               onPressed: () => Navigator.pop(context, 'OK'),
-//               child: const Text('OK'),
-//             ),
-//           ],
-//         ),
-//       ),
-//       child: const Text('Show Dialog'),
-//     );
-//   }
-// }
-
-// class Page1 extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(),
-//       body: Center(
-//         child: ElevatedButton(
-//           onPressed: () {
-//             Navigator.of(context).push(createRoute1());
-//           },
-//           child: Text('Go!'),
-//         ),
-//       ),
-//     );
-//   }
-// }
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: () => showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title: const Text('AlertDialog Title'),
+          content: const Text('AlertDialog description'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.pop(context, 'Cancel'),
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.pop(context, 'OK'),
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      ),
+      child: const Text('Show Dialog'),
+    );
+  }
+}

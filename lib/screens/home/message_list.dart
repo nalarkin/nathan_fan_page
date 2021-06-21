@@ -32,9 +32,13 @@ class _MessagesState extends State<Messages> {
         return new ListView(
           children: snapshot.data!.docs.map((DocumentSnapshot document) {
             Map<String, dynamic> data = document.data() as Map<String, dynamic>;
-            return new ListTile(
-              title: new Text(data['date'].toDate().toString()),
-              subtitle: new Text(data['content']),
+            return Card(
+              elevation: 5.0,
+              margin: EdgeInsets.fromLTRB(8.0, 6.0, 8.0, 6.0),
+              child: new ListTile(
+                title: new Text(data['date'].toDate().toString()),
+                subtitle: new Text(data['content']),
+              ),
             );
           }).toList(),
         );
