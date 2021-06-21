@@ -47,13 +47,29 @@ class AuthService {
   }
 
   // register with email and password
-  Future registerWithEmailAndPassword(String email, String password) async {
+  // Future updateUserInfo(String firstName, String lastName) async {
+  //   try {
+  //     UserCredential result = await _auth.createUserWithEmailAndPassword(
+  //         email: email, password: password);
+  //     User? currUser = result.user;
+  //     await DatabaseService(uid: currUser?.uid as String)
+  //         .setUserData('dummyFirst', 'dummyLast', 'dummyRole');
+  //     return _userFromFirebase(currUser);
+  //   } catch (e) {
+  //     print(e.toString());
+  //     return null;
+  //   }
+  // }
+
+  // register with email and password
+  Future registerWithEmailAndPassword(
+      String email, String password, String firstName, String lastName) async {
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       User? currUser = result.user;
       await DatabaseService(uid: currUser?.uid as String)
-          .setUserData('dummyFirst', 'dummyLast', 'dummyRole');
+          .setUserData(firstName, lastName, 'Customer');
       return _userFromFirebase(currUser);
     } catch (e) {
       print(e.toString());

@@ -16,26 +16,21 @@ class DatabaseService {
   final CollectionReference messageCollection =
       FirebaseFirestore.instance.collection('messages');
   FirebaseFirestore firestore = FirebaseFirestore.instance;
-  // final QuerySnapshot<
-
-  // Future updateUserData(String sugars, String name, int strength) async {
-  //   return await brewCollection.doc(uid).set({
-  //     'sugar': sugars,
-  //     'name': name,
-  //     'strength': strength,
-  //   });
-  // }
 
   Future setUserData(String firstName, String lastName, String userRole) async {
-    return await userCollection.doc(uid).set(
-        {'firstName': firstName, 'lastName': lastName, 'userRole': userRole});
+    return await userCollection.doc(uid).set({
+      'firstName': firstName,
+      'lastName': lastName,
+      'userRole': userRole,
+      'registrationDate': DateTime.now()
+    });
   }
 
-  // return await userCollection.doc(uid).set({
-  //   'firstName': firstName,
-  //   'lastName': lastName,
-  //   'userRole': userRole,
-  // });
+  Future updateUserData(String firstName, String lastName) async {
+    return await userCollection.doc(uid).set(
+        {'firstName': firstName, 'lastName': lastName},
+        SetOptions(merge: true));
+  }
 
   // create UID and add message to database
   Future createMessageData(String content, DateTime? date) async {
@@ -45,38 +40,9 @@ class DatabaseService {
     });
   }
 
-  // brew list from snapshot
-  // List<Message> _messageListFromSnapshot(QuerySnapshot snapshot) {
-  //   return snapshot.docs.map((doc) {
-  //     try {
-  //       // Future<QuerySnapshot<Object?>> _allDocs = brewCollection.get();
-  //       // _allDocs.then((QueryDocumentSnapshot) =>
-  //       //     QueryDocumentSnapshot.docs.forEach((doc) {
-  //       //       print(doc.id + " " + doc.data().toString());
-  //       //     }));
-  //       print(doc.exists);
-  //       print(doc.toString());
-  //       print(doc.data());
-  //       return Message(content: doc.get('content'), date: doc.get('date'));
-  //     } catch (e) {
-  //       print(e);
-  //       return Message(content: 'null_content', date: Timestamp.now());
-
-  //     }
-  //   }).toList();
-  // }
-
   List<Message> _messageListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.docs.map((doc) {
       try {
-        // Future<QuerySnapshot<Object?>> _allDocs = brewCollection.get();
-        // _allDocs.then((QueryDocumentSnapshot) =>
-        //     QueryDocumentSnapshot.docs.forEach((doc) {
-        //       print(doc.id + " " + doc.data().toString());
-        //     }));
-        print(doc.exists);
-        print(doc.toString());
-        print(doc.data());
         return Message(content: doc.get('content'), date: doc.get('date'));
       } catch (e) {
         print(e);
@@ -89,30 +55,4 @@ class DatabaseService {
   Stream<List<Message>> get messages {
     return messageCollection.snapshots().map(_messageListFromSnapshot);
   }
-
-  // // brew list from snapshot
-  // List<Brew> _brewListFromSnapshot(QuerySnapshot snapshot) {
-  //   return snapshot.docs.map((doc) {
-  //     try {
-  //       // Future<QuerySnapshot<Object?>> _allDocs = brewCollection.get();
-  //       // _allDocs.then((QueryDocumentSnapshot) =>
-  //       //     QueryDocumentSnapshot.docs.forEach((doc) {
-  //       //       print(doc.id + " " + doc.data().toString());
-  //       //     }));
-
-  //       return Brew(
-  //           name: doc.get('name'),
-  //           sugars: doc.get('sugar'),
-  //           strength: doc.get('strength'));
-  //     } catch (e) {
-  //       print(e);
-  //       return Brew(name: 'nullname', sugars: 'nullsugars', strength: 0);
-  //     }
-  //   }).toList();
-  // }
-
-  // // get brews stream
-  // Stream<List<Brew>> get brews {
-  //   return brewCollection.snapshots().map(_brewListFromSnapshot);
-  // }
 }
