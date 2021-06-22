@@ -6,6 +6,7 @@ class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   TheUser? _userFromFirebase(User? user) {
+    print("user you want to register is ${user}");
     return user != null
         ? TheUser(uid: user.uid, registrationDate: user.metadata.creationTime)
         : null;
@@ -46,6 +47,14 @@ class AuthService {
     }
   }
 
+  Future signInWithGoogle(User? user) async {
+    try {
+      return _userFromFirebase(user);
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
   // register with email and password
   // Future updateUserInfo(String firstName, String lastName) async {
   //   try {

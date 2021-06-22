@@ -2,6 +2,8 @@ import 'package:fanpage/services/auth.dart';
 import 'package:fanpage/shared/constants.dart';
 import 'package:fanpage/shared/loading.dart';
 import 'package:flutter/material.dart';
+import 'package:fanpage/services/authentication.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class SignIn extends StatefulWidget {
   // const SignIn({Key? key}) : super(key: key);
@@ -100,6 +102,8 @@ class _SignInState extends State<SignIn> {
                             "Sign in",
                             style: TextStyle(color: Colors.white),
                           )),
+                      SizedBox(height: 20.0),
+                      GoogleSignInButton(),
                       SizedBox(height: 12.0),
                       Text(
                         error,
@@ -108,5 +112,81 @@ class _SignInState extends State<SignIn> {
                     ],
                   ),
                 )));
+  }
+}
+
+class GoogleSignInButton extends StatefulWidget {
+  @override
+  _GoogleSignInButtonState createState() => _GoogleSignInButtonState();
+}
+
+class _GoogleSignInButtonState extends State<GoogleSignInButton> {
+  bool _isSigningIn = false;
+  final AuthService _auth = AuthService();
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16.0),
+      child: _isSigningIn
+          ? CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+            )
+          : OutlinedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.white),
+                shape: MaterialStateProperty.all(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(40),
+                  ),
+                ),
+              ),
+              onPressed: () async {
+                setState(() {
+                  _isSigningIn = true;
+                });
+
+                User? user =
+                    await Authentication.signInWithGoogle(context: context);
+                await _auth.signInWithGoogle(user);
+                setState(() {
+                  _isSigningIn = false;
+                });
+
+                // if (user != null) {
+                //   Navigator.of(context).pushReplacement(
+                //     MaterialPageRoute(
+                //       builder: (context) => UserInfoScreen(
+                //         user: user,
+                //       ),
+                //     ),
+                //   );
+                // }
+              },
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Image(
+                      image: AssetImage("assets/google_logo.png"),
+                      height: 35.0,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: Text(
+                        'Sign in with Google',
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.black54,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+    );
   }
 }
