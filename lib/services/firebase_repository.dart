@@ -1,28 +1,28 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart' as auth;
-import 'package:flutter/material.dart';
-import 'package:reply_flutter/core/data/model/MessageCard.dart';
-import 'package:reply_flutter/core/data/repository/RepositoryInterface.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:firebase_auth/firebase_auth.dart' as auth;
+// import 'package:flutter/material.dart';
+// import 'package:reply_flutter/core/data/model/MessageCard.dart';
+// import 'package:reply_flutter/core/data/repository/RepositoryInterface.dart';
 
-class FirebaseRepository with ChangeNotifier implements RepositoryInterface {
+// class FirebaseRepository with ChangeNotifier implements RepositoryInterface {
 
-  FirebaseRepository();
+//   FirebaseRepository();
 
 
-  final firestoreInstance = FirebaseFirestore.instance;
+//   final firestoreInstance = FirebaseFirestore.instance;
 
-  static const String USERS_COLLECTION = 'users';
+//   static const String USERS_COLLECTION = 'users';
 
-  static const String NAME_FIELD = 'name';
-  static const String EMAIL_FIELD = 'email';
-  static const String PERSONAL_MESSAGES_FIELD = 'personalMessages';
-  static const String SOCIAL_MESSAGES_FIELD = 'socialMessages';
-  static const String BUSINESS_MESSAGES_FIELD = 'businessMessages';
-  static const String FIRST_ADDITIONAL_MESSAGES_FIELD = 'firstAdditionalMessages';
-  static const String SECOND_ADDITIONAL_MESSAGES_FIELD = 'secondAdditionalMessages';
-  static const String REPLY_LATER_MESSAGE_FIELD = 'replyLater';
-  static const String CARD_MESSAGE_TITLE_FIELD = 'title';
-  static const String CARD_MESSAGE_MESSAGE_FIELD = 'message';
+//   static const String NAME_FIELD = 'name';
+//   static const String EMAIL_FIELD = 'email';
+//   static const String PERSONAL_MESSAGES_FIELD = 'personalMessages';
+//   static const String SOCIAL_MESSAGES_FIELD = 'socialMessages';
+//   static const String BUSINESS_MESSAGES_FIELD = 'businessMessages';
+//   static const String FIRST_ADDITIONAL_MESSAGES_FIELD = 'firstAdditionalMessages';
+//   static const String SECOND_ADDITIONAL_MESSAGES_FIELD = 'secondAdditionalMessages';
+//   static const String REPLY_LATER_MESSAGE_FIELD = 'replyLater';
+//   static const String CARD_MESSAGE_TITLE_FIELD = 'title';
+//   static const String CARD_MESSAGE_MESSAGE_FIELD = 'message';
 
 
 
@@ -31,536 +31,536 @@ class FirebaseRepository with ChangeNotifier implements RepositoryInterface {
 
 
 
-  void createUserInDatabaseWithEmail(auth.User firebaseUser) async {
+//   void createUserInDatabaseWithEmail(auth.User firebaseUser) async {
 
-    await firestoreInstance.collection(USERS_COLLECTION).doc(firebaseUser.uid).set({
-      NAME_FIELD : firebaseUser.displayName,
-      EMAIL_FIELD: firebaseUser.email,
-      PERSONAL_MESSAGES_FIELD : [MessageCard(title: 'Hi ${firebaseUser.displayName}! 👋🏼', message: 'Add your own message!').toJson(),MessageCard(title: 'Hello ${firebaseUser.displayName}! 👋🏼', message: 'Add your own message!').toJson()],
-      SOCIAL_MESSAGES_FIELD : [MessageCard(title: 'Hi ${firebaseUser.displayName}! 👋🏼', message: 'Add your own message!').toJson(),MessageCard(title: 'Hello ${firebaseUser.displayName}! 👋🏼', message: 'Add your own message!').toJson()],
-      BUSINESS_MESSAGES_FIELD : [MessageCard(title: 'Hi ${firebaseUser.displayName}! 👋🏼', message: 'Add your own message!').toJson(),MessageCard(title: 'Hello ${firebaseUser.displayName}! 👋🏼', message: 'Add your own message!').toJson()],
-      FIRST_ADDITIONAL_MESSAGES_FIELD : [MessageCard(title: 'Hi ${firebaseUser.displayName}! 👋🏼', message: 'Add your own message!').toJson(),MessageCard(title: 'Hello ${firebaseUser.displayName}! 👋🏼', message: 'Add a new message!').toJson()],
-      SECOND_ADDITIONAL_MESSAGES_FIELD : [MessageCard(title: 'Hi ${firebaseUser.displayName}! 👋🏼', message: 'Add your own message!').toJson(),MessageCard(title: 'Hello ${firebaseUser.displayName}! 👋🏼', message: 'Add a new message!').toJson()],
-    }).whenComplete(() => print('Created user in database with email. Name: ${firebaseUser.displayName} | Email: ${firebaseUser.email}'));
+//     await firestoreInstance.collection(USERS_COLLECTION).doc(firebaseUser.uid).set({
+//       NAME_FIELD : firebaseUser.displayName,
+//       EMAIL_FIELD: firebaseUser.email,
+//       PERSONAL_MESSAGES_FIELD : [MessageCard(title: 'Hi ${firebaseUser.displayName}! 👋🏼', message: 'Add your own message!').toJson(),MessageCard(title: 'Hello ${firebaseUser.displayName}! 👋🏼', message: 'Add your own message!').toJson()],
+//       SOCIAL_MESSAGES_FIELD : [MessageCard(title: 'Hi ${firebaseUser.displayName}! 👋🏼', message: 'Add your own message!').toJson(),MessageCard(title: 'Hello ${firebaseUser.displayName}! 👋🏼', message: 'Add your own message!').toJson()],
+//       BUSINESS_MESSAGES_FIELD : [MessageCard(title: 'Hi ${firebaseUser.displayName}! 👋🏼', message: 'Add your own message!').toJson(),MessageCard(title: 'Hello ${firebaseUser.displayName}! 👋🏼', message: 'Add your own message!').toJson()],
+//       FIRST_ADDITIONAL_MESSAGES_FIELD : [MessageCard(title: 'Hi ${firebaseUser.displayName}! 👋🏼', message: 'Add your own message!').toJson(),MessageCard(title: 'Hello ${firebaseUser.displayName}! 👋🏼', message: 'Add a new message!').toJson()],
+//       SECOND_ADDITIONAL_MESSAGES_FIELD : [MessageCard(title: 'Hi ${firebaseUser.displayName}! 👋🏼', message: 'Add your own message!').toJson(),MessageCard(title: 'Hello ${firebaseUser.displayName}! 👋🏼', message: 'Add a new message!').toJson()],
+//     }).whenComplete(() => print('Created user in database with email. Name: ${firebaseUser.displayName} | Email: ${firebaseUser.email}'));
 
-  }
+//   }
 
-  void createUserInDatabaseWithGoogleProvider(auth.User firebaseUser) async {
+//   void createUserInDatabaseWithGoogleProvider(auth.User firebaseUser) async {
 
-    await firestoreInstance.collection(USERS_COLLECTION).doc(firebaseUser.uid).set({
-      NAME_FIELD : firebaseUser.displayName,
-      EMAIL_FIELD: firebaseUser.email,
-      PERSONAL_MESSAGES_FIELD : [MessageCard(title: 'Hi ${firebaseUser.displayName}! 👋🏼', message: 'Add your own message!').toJson(),MessageCard(title: 'Hello ${firebaseUser.displayName}! 👋🏼', message: 'Add your own message!').toJson()],
-      SOCIAL_MESSAGES_FIELD : [MessageCard(title: 'Hi ${firebaseUser.displayName}! 👋🏼', message: 'Add your own message!').toJson(),MessageCard(title: 'Hello ${firebaseUser.displayName}! 👋🏼', message: 'Add your own message!').toJson()],
-      BUSINESS_MESSAGES_FIELD : [MessageCard(title: 'Hi ${firebaseUser.displayName}! 👋🏼', message: 'Add your own message!').toJson(),MessageCard(title: 'Hello ${firebaseUser.displayName}! 👋🏼', message: 'Add your own message!').toJson()],
-      FIRST_ADDITIONAL_MESSAGES_FIELD : [MessageCard(title: 'Hi ${firebaseUser.displayName}! 👋🏼', message: 'Add your own message!').toJson(),MessageCard(title: 'Hello ${firebaseUser.displayName}! 👋🏼', message: 'Add a new message!').toJson()],
-      SECOND_ADDITIONAL_MESSAGES_FIELD : [MessageCard(title: 'Hi ${firebaseUser.displayName}! 👋🏼', message: 'Add your own message!').toJson(),MessageCard(title: 'Hello ${firebaseUser.displayName}! 👋🏼', message: 'Add a new message!').toJson()],
+//     await firestoreInstance.collection(USERS_COLLECTION).doc(firebaseUser.uid).set({
+//       NAME_FIELD : firebaseUser.displayName,
+//       EMAIL_FIELD: firebaseUser.email,
+//       PERSONAL_MESSAGES_FIELD : [MessageCard(title: 'Hi ${firebaseUser.displayName}! 👋🏼', message: 'Add your own message!').toJson(),MessageCard(title: 'Hello ${firebaseUser.displayName}! 👋🏼', message: 'Add your own message!').toJson()],
+//       SOCIAL_MESSAGES_FIELD : [MessageCard(title: 'Hi ${firebaseUser.displayName}! 👋🏼', message: 'Add your own message!').toJson(),MessageCard(title: 'Hello ${firebaseUser.displayName}! 👋🏼', message: 'Add your own message!').toJson()],
+//       BUSINESS_MESSAGES_FIELD : [MessageCard(title: 'Hi ${firebaseUser.displayName}! 👋🏼', message: 'Add your own message!').toJson(),MessageCard(title: 'Hello ${firebaseUser.displayName}! 👋🏼', message: 'Add your own message!').toJson()],
+//       FIRST_ADDITIONAL_MESSAGES_FIELD : [MessageCard(title: 'Hi ${firebaseUser.displayName}! 👋🏼', message: 'Add your own message!').toJson(),MessageCard(title: 'Hello ${firebaseUser.displayName}! 👋🏼', message: 'Add a new message!').toJson()],
+//       SECOND_ADDITIONAL_MESSAGES_FIELD : [MessageCard(title: 'Hi ${firebaseUser.displayName}! 👋🏼', message: 'Add your own message!').toJson(),MessageCard(title: 'Hello ${firebaseUser.displayName}! 👋🏼', message: 'Add a new message!').toJson()],
 
-    }).whenComplete(() => print('Created user in database with Google Provider. Name: ${firebaseUser.displayName} | Email: ${firebaseUser.email}')).catchError((error) {print(error.toString());});
+//     }).whenComplete(() => print('Created user in database with Google Provider. Name: ${firebaseUser.displayName} | Email: ${firebaseUser.email}')).catchError((error) {print(error.toString());});
 
-  }
+//   }
 
-  void createUserInDatabaseWithAppleProvider(auth.User firebaseUser) async {
+//   void createUserInDatabaseWithAppleProvider(auth.User firebaseUser) async {
 
-    await firestoreInstance.collection(USERS_COLLECTION).doc(firebaseUser.uid).set({
-      NAME_FIELD : firebaseUser.displayName,
-      PERSONAL_MESSAGES_FIELD : [MessageCard(title: 'Hi ${firebaseUser.displayName}! 👋🏼', message: 'Add your own message!').toJson(),MessageCard(title: 'Hello ${firebaseUser.displayName}! 👋🏼', message: 'Add your own message!').toJson()],
-      SOCIAL_MESSAGES_FIELD : [MessageCard(title: 'Hi ${firebaseUser.displayName}! 👋🏼', message: 'Add your own message!').toJson(),MessageCard(title: 'Hello ${firebaseUser.displayName}! 👋🏼', message: 'Add your own message!').toJson()],
-      BUSINESS_MESSAGES_FIELD : [MessageCard(title: 'Hi ${firebaseUser.displayName}! 👋🏼', message: 'Add your own message!').toJson(),MessageCard(title: 'Hello ${firebaseUser.displayName}! 👋🏼', message: 'Add your own message!').toJson()],
-      FIRST_ADDITIONAL_MESSAGES_FIELD : [MessageCard(title: 'Hi ${firebaseUser.displayName}! 👋🏼', message: 'Add your own message!').toJson(),MessageCard(title: 'Hello ${firebaseUser.displayName}! 👋🏼', message: 'Add a new message!').toJson()],
-      SECOND_ADDITIONAL_MESSAGES_FIELD : [MessageCard(title: 'Hi ${firebaseUser.displayName}! 👋🏼', message: 'Add your own message!').toJson(),MessageCard(title: 'Hello ${firebaseUser.displayName}! 👋🏼', message: 'Add a new message!').toJson()],
+//     await firestoreInstance.collection(USERS_COLLECTION).doc(firebaseUser.uid).set({
+//       NAME_FIELD : firebaseUser.displayName,
+//       PERSONAL_MESSAGES_FIELD : [MessageCard(title: 'Hi ${firebaseUser.displayName}! 👋🏼', message: 'Add your own message!').toJson(),MessageCard(title: 'Hello ${firebaseUser.displayName}! 👋🏼', message: 'Add your own message!').toJson()],
+//       SOCIAL_MESSAGES_FIELD : [MessageCard(title: 'Hi ${firebaseUser.displayName}! 👋🏼', message: 'Add your own message!').toJson(),MessageCard(title: 'Hello ${firebaseUser.displayName}! 👋🏼', message: 'Add your own message!').toJson()],
+//       BUSINESS_MESSAGES_FIELD : [MessageCard(title: 'Hi ${firebaseUser.displayName}! 👋🏼', message: 'Add your own message!').toJson(),MessageCard(title: 'Hello ${firebaseUser.displayName}! 👋🏼', message: 'Add your own message!').toJson()],
+//       FIRST_ADDITIONAL_MESSAGES_FIELD : [MessageCard(title: 'Hi ${firebaseUser.displayName}! 👋🏼', message: 'Add your own message!').toJson(),MessageCard(title: 'Hello ${firebaseUser.displayName}! 👋🏼', message: 'Add a new message!').toJson()],
+//       SECOND_ADDITIONAL_MESSAGES_FIELD : [MessageCard(title: 'Hi ${firebaseUser.displayName}! 👋🏼', message: 'Add your own message!').toJson(),MessageCard(title: 'Hello ${firebaseUser.displayName}! 👋🏼', message: 'Add a new message!').toJson()],
 
-    }).whenComplete(() => print('Created user in database with Apple Provider. Name: ${firebaseUser.displayName} | Email: ${firebaseUser.email}')).catchError((error) {print(error.toString());});
+//     }).whenComplete(() => print('Created user in database with Apple Provider. Name: ${firebaseUser.displayName} | Email: ${firebaseUser.email}')).catchError((error) {print(error.toString());});
 
-  }
+//   }
 
-  Future<List<MessageCard>> getPersonalMessages(auth.User firebaseUser) async {
+//   Future<List<MessageCard>> getPersonalMessages(auth.User firebaseUser) async {
 
-    List<MessageCard> personalMessages = List();
+//     List<MessageCard> personalMessages = List();
 
-    await firestoreInstance.collection(USERS_COLLECTION).doc(firebaseUser.uid).get().then((document) {
+//     await firestoreInstance.collection(USERS_COLLECTION).doc(firebaseUser.uid).get().then((document) {
 
-      if(document.exists) {
+//       if(document.exists) {
 
-        // Get the List of Maps
-        List values = document.get(PERSONAL_MESSAGES_FIELD);
-        print('List received: $values');
+//         // Get the List of Maps
+//         List values = document.get(PERSONAL_MESSAGES_FIELD);
+//         print('List received: $values');
 
 
-        // For each map (each message card) in the list, add a MessageCard to the MessageCard list (using the fromJson method)
-        for(Map<String, dynamic> map in values ) {
-          print('Map received in List: $map');
+//         // For each map (each message card) in the list, add a MessageCard to the MessageCard list (using the fromJson method)
+//         for(Map<String, dynamic> map in values ) {
+//           print('Map received in List: $map');
 
-          /// Create the MessageCard from the map
-          MessageCard messageCard = MessageCard.fromJson(map);
-          print('Retrieved Message Card: ${messageCard.title} | ${messageCard.message}');
+//           /// Create the MessageCard from the map
+//           MessageCard messageCard = MessageCard.fromJson(map);
+//           print('Retrieved Message Card: ${messageCard.title} | ${messageCard.message}');
 
-          /// Add the MessageCard to the list
-          personalMessages.add(messageCard);
-          print('Added MessageCard to list: ${personalMessages.last}');
+//           /// Add the MessageCard to the list
+//           personalMessages.add(messageCard);
+//           print('Added MessageCard to list: ${personalMessages.last}');
 
-        }
-      }
-    });
+//         }
+//       }
+//     });
 
 
-    return personalMessages;
+//     return personalMessages;
 
-  }
+//   }
 
-  @override
-  Future<List<MessageCard>> getBusinessMessages(auth.User firebaseUser) async {
+//   @override
+//   Future<List<MessageCard>> getBusinessMessages(auth.User firebaseUser) async {
 
-    List<MessageCard> businessMessages = List();
+//     List<MessageCard> businessMessages = List();
 
-    await firestoreInstance.collection(USERS_COLLECTION).doc(firebaseUser.uid).get().then((document) {
+//     await firestoreInstance.collection(USERS_COLLECTION).doc(firebaseUser.uid).get().then((document) {
 
-      if(document.exists) {
+//       if(document.exists) {
 
-        // Get the List of Maps
-        List values = document.get(BUSINESS_MESSAGES_FIELD);
-        print('List received: $values');
+//         // Get the List of Maps
+//         List values = document.get(BUSINESS_MESSAGES_FIELD);
+//         print('List received: $values');
 
 
-        // For each map (each message card) in the list, add a MessageCard to the MessageCard list (using the fromJson method)
-        for(Map<String, dynamic> map in values ) {
-          print('Map received in List: $map');
+//         // For each map (each message card) in the list, add a MessageCard to the MessageCard list (using the fromJson method)
+//         for(Map<String, dynamic> map in values ) {
+//           print('Map received in List: $map');
 
-          /// Create the MessageCard from the map
-          MessageCard messageCard = MessageCard.fromJson(map);
-          print('Retrieved Message Card: ${messageCard.title} | ${messageCard.message}');
+//           /// Create the MessageCard from the map
+//           MessageCard messageCard = MessageCard.fromJson(map);
+//           print('Retrieved Message Card: ${messageCard.title} | ${messageCard.message}');
 
-          /// Add the MessageCard to the list
-          businessMessages.add(messageCard);
-          print('Added MessageCard to list: ${businessMessages.last}');
+//           /// Add the MessageCard to the list
+//           businessMessages.add(messageCard);
+//           print('Added MessageCard to list: ${businessMessages.last}');
 
-        }
-      }
-    });
+//         }
+//       }
+//     });
 
 
-    return businessMessages;
-  }
+//     return businessMessages;
+//   }
 
-  @override
-  Future<List<MessageCard>> getFirstAdditionalMessages(auth.User firebaseUser) async {
+//   @override
+//   Future<List<MessageCard>> getFirstAdditionalMessages(auth.User firebaseUser) async {
 
-    List<MessageCard> firstAdditionalMessages = List();
+//     List<MessageCard> firstAdditionalMessages = List();
 
-    await firestoreInstance.collection(USERS_COLLECTION).doc(firebaseUser.uid).get().then((document) {
+//     await firestoreInstance.collection(USERS_COLLECTION).doc(firebaseUser.uid).get().then((document) {
 
-      if(document.exists) {
+//       if(document.exists) {
 
-        // Get the List of Maps
-        List values = document.get(FIRST_ADDITIONAL_MESSAGES_FIELD);
-        print('List received: $values');
+//         // Get the List of Maps
+//         List values = document.get(FIRST_ADDITIONAL_MESSAGES_FIELD);
+//         print('List received: $values');
 
 
-        // For each map (each message card) in the list, add a MessageCard to the MessageCard list (using the fromJson method)
-        for(Map<String, dynamic> map in values ) {
-          print('Map received in List: $map');
+//         // For each map (each message card) in the list, add a MessageCard to the MessageCard list (using the fromJson method)
+//         for(Map<String, dynamic> map in values ) {
+//           print('Map received in List: $map');
 
-          /// Create the MessageCard from the map
-          MessageCard messageCard = MessageCard.fromJson(map);
-          print('Retrieved Message Card: ${messageCard.title} | ${messageCard.message}');
+//           /// Create the MessageCard from the map
+//           MessageCard messageCard = MessageCard.fromJson(map);
+//           print('Retrieved Message Card: ${messageCard.title} | ${messageCard.message}');
 
-          /// Add the MessageCard to the list
-          firstAdditionalMessages.add(messageCard);
-          print('Added MessageCard to list: ${firstAdditionalMessages.last}');
+//           /// Add the MessageCard to the list
+//           firstAdditionalMessages.add(messageCard);
+//           print('Added MessageCard to list: ${firstAdditionalMessages.last}');
 
-        }
-      }
-    });
+//         }
+//       }
+//     });
 
 
-    return firstAdditionalMessages;
-  }
+//     return firstAdditionalMessages;
+//   }
 
-  @override
-  Future<List<MessageCard>> getSecondAdditionalMessages(auth.User firebaseUser) async {
+//   @override
+//   Future<List<MessageCard>> getSecondAdditionalMessages(auth.User firebaseUser) async {
 
-    List<MessageCard> secondAdditionalMessages = List();
+//     List<MessageCard> secondAdditionalMessages = List();
 
-    await firestoreInstance.collection(USERS_COLLECTION).doc(firebaseUser.uid).get().then((document) {
+//     await firestoreInstance.collection(USERS_COLLECTION).doc(firebaseUser.uid).get().then((document) {
 
-      if(document.exists) {
+//       if(document.exists) {
 
-        // Get the List of Maps
-        List values = document.get(SECOND_ADDITIONAL_MESSAGES_FIELD);
-        print('List received: $values');
+//         // Get the List of Maps
+//         List values = document.get(SECOND_ADDITIONAL_MESSAGES_FIELD);
+//         print('List received: $values');
 
 
-        // For each map (each message card) in the list, add a MessageCard to the MessageCard list (using the fromJson method)
-        for(Map<String, dynamic> map in values ) {
-          print('Map received in List: $map');
+//         // For each map (each message card) in the list, add a MessageCard to the MessageCard list (using the fromJson method)
+//         for(Map<String, dynamic> map in values ) {
+//           print('Map received in List: $map');
 
-          /// Create the MessageCard from the map
-          MessageCard messageCard = MessageCard.fromJson(map);
-          print('Retrieved Message Card: ${messageCard.title} | ${messageCard.message}');
+//           /// Create the MessageCard from the map
+//           MessageCard messageCard = MessageCard.fromJson(map);
+//           print('Retrieved Message Card: ${messageCard.title} | ${messageCard.message}');
 
-          /// Add the MessageCard to the list
-          secondAdditionalMessages.add(messageCard);
-          print('Added MessageCard to list: ${secondAdditionalMessages.last}');
+//           /// Add the MessageCard to the list
+//           secondAdditionalMessages.add(messageCard);
+//           print('Added MessageCard to list: ${secondAdditionalMessages.last}');
 
-        }
-      }
-    });
+//         }
+//       }
+//     });
 
 
-    return secondAdditionalMessages;
-  }
+//     return secondAdditionalMessages;
+//   }
 
-  @override
-  Future<List<MessageCard>> getSocialMessages(auth.User firebaseUser) async {
+//   @override
+//   Future<List<MessageCard>> getSocialMessages(auth.User firebaseUser) async {
 
-    List<MessageCard> socialMessages = List();
+//     List<MessageCard> socialMessages = List();
 
-    await firestoreInstance.collection(USERS_COLLECTION).doc(firebaseUser.uid).get().then((document) {
+//     await firestoreInstance.collection(USERS_COLLECTION).doc(firebaseUser.uid).get().then((document) {
 
-      if(document.exists) {
+//       if(document.exists) {
 
-        // Get the List of Maps
-        List values = document.get(SOCIAL_MESSAGES_FIELD);
-        print('List received: $values');
+//         // Get the List of Maps
+//         List values = document.get(SOCIAL_MESSAGES_FIELD);
+//         print('List received: $values');
 
 
-        // For each map (each message card) in the list, add a MessageCard to the MessageCard list (using the fromJson method)
-        for(Map<String, dynamic> map in values ) {
-          print('Map received in List: $map');
+//         // For each map (each message card) in the list, add a MessageCard to the MessageCard list (using the fromJson method)
+//         for(Map<String, dynamic> map in values ) {
+//           print('Map received in List: $map');
 
-          /// Create the MessageCard from the map
-          MessageCard messageCard = MessageCard.fromJson(map);
-          print('Retrieved Message Card: ${messageCard.title} | ${messageCard.message}');
+//           /// Create the MessageCard from the map
+//           MessageCard messageCard = MessageCard.fromJson(map);
+//           print('Retrieved Message Card: ${messageCard.title} | ${messageCard.message}');
 
-          /// Add the MessageCard to the list
-          socialMessages.add(messageCard);
-          print('Added MessageCard to list: ${socialMessages.last}');
+//           /// Add the MessageCard to the list
+//           socialMessages.add(messageCard);
+//           print('Added MessageCard to list: ${socialMessages.last}');
 
-        }
-      }
-    });
+//         }
+//       }
+//     });
 
 
-    return socialMessages;
-  }
+//     return socialMessages;
+//   }
 
-  @override
-  Future<MessageCard> getReplyLaterMessage(auth.User firebaseUser) async {
+//   @override
+//   Future<MessageCard> getReplyLaterMessage(auth.User firebaseUser) async {
 
-    List<MessageCard> replyLaterMessageList = List();
+//     List<MessageCard> replyLaterMessageList = List();
 
-    await firestoreInstance.collection(USERS_COLLECTION).doc(firebaseUser.uid).get().then((document) {
+//     await firestoreInstance.collection(USERS_COLLECTION).doc(firebaseUser.uid).get().then((document) {
 
-      if(document.exists) {
+//       if(document.exists) {
 
-        // Get the List of Maps
-        List values = document.get(REPLY_LATER_MESSAGE_FIELD);
-        print('List received: $values');
+//         // Get the List of Maps
+//         List values = document.get(REPLY_LATER_MESSAGE_FIELD);
+//         print('List received: $values');
 
 
-        // For each map (each message card) in the list, add a MessageCard to the MessageCard list (using the fromJson method)
-        for(Map<String, dynamic> map in values ) {
-          print('Map received in List: $map');
+//         // For each map (each message card) in the list, add a MessageCard to the MessageCard list (using the fromJson method)
+//         for(Map<String, dynamic> map in values ) {
+//           print('Map received in List: $map');
 
-          /// Create the MessageCard from the map
-          MessageCard messageCard = MessageCard.fromJson(map);
-          print('Retrieved Message Card: ${messageCard.title} | ${messageCard.message}');
+//           /// Create the MessageCard from the map
+//           MessageCard messageCard = MessageCard.fromJson(map);
+//           print('Retrieved Message Card: ${messageCard.title} | ${messageCard.message}');
 
-          /// Add the MessageCard to the list
-          replyLaterMessageList.add(messageCard);
-          print('Added MessageCard to list: ${replyLaterMessageList.last}');
+//           /// Add the MessageCard to the list
+//           replyLaterMessageList.add(messageCard);
+//           print('Added MessageCard to list: ${replyLaterMessageList.last}');
 
-        }
-      }
-    });
+//         }
+//       }
+//     });
 
 
-    return replyLaterMessageList[0];
-  }
+//     return replyLaterMessageList[0];
+//   }
 
-  void addPersonalMessage(auth.User firebaseUser, MessageCard messageCardToAdd) async {
+//   void addPersonalMessage(auth.User firebaseUser, MessageCard messageCardToAdd) async {
 
-    Map messageCardData = messageCardToAdd.toJson();
+//     Map messageCardData = messageCardToAdd.toJson();
 
-    List messageCardList = [messageCardData];
+//     List messageCardList = [messageCardData];
 
-    await firestoreInstance.collection(USERS_COLLECTION).doc(firebaseUser.uid).update({
+//     await firestoreInstance.collection(USERS_COLLECTION).doc(firebaseUser.uid).update({
 
-      PERSONAL_MESSAGES_FIELD : FieldValue.arrayUnion(messageCardList)
+//       PERSONAL_MESSAGES_FIELD : FieldValue.arrayUnion(messageCardList)
 
-    });
-  }
+//     });
+//   }
 
-  @override
-  void addBusinessMessage(auth.User firebaseUser, MessageCard messageCardToAdd) async {
+//   @override
+//   void addBusinessMessage(auth.User firebaseUser, MessageCard messageCardToAdd) async {
 
-    Map messageCardData = messageCardToAdd.toJson();
+//     Map messageCardData = messageCardToAdd.toJson();
 
-    List messageCardList = [messageCardData];
+//     List messageCardList = [messageCardData];
 
-    await firestoreInstance.collection(USERS_COLLECTION).doc(firebaseUser.uid).update({
+//     await firestoreInstance.collection(USERS_COLLECTION).doc(firebaseUser.uid).update({
 
-      BUSINESS_MESSAGES_FIELD : FieldValue.arrayUnion(messageCardList)
+//       BUSINESS_MESSAGES_FIELD : FieldValue.arrayUnion(messageCardList)
 
-    });
-  }
+//     });
+//   }
 
-  @override
-  void addFirstAdditionalMessage(auth.User firebaseUser, MessageCard messageCardToAdd) async {
+//   @override
+//   void addFirstAdditionalMessage(auth.User firebaseUser, MessageCard messageCardToAdd) async {
 
-    Map messageCardData = messageCardToAdd.toJson();
+//     Map messageCardData = messageCardToAdd.toJson();
 
-    List messageCardList = [messageCardData];
+//     List messageCardList = [messageCardData];
 
-    await firestoreInstance.collection(USERS_COLLECTION).doc(firebaseUser.uid).update({
+//     await firestoreInstance.collection(USERS_COLLECTION).doc(firebaseUser.uid).update({
 
-      FIRST_ADDITIONAL_MESSAGES_FIELD : FieldValue.arrayUnion(messageCardList)
+//       FIRST_ADDITIONAL_MESSAGES_FIELD : FieldValue.arrayUnion(messageCardList)
 
-    });
-  }
+//     });
+//   }
 
-  @override
-  void addSecondAdditionalMessage(auth.User firebaseUser, MessageCard messageCardToAdd) async {
+//   @override
+//   void addSecondAdditionalMessage(auth.User firebaseUser, MessageCard messageCardToAdd) async {
 
-    Map messageCardData = messageCardToAdd.toJson();
+//     Map messageCardData = messageCardToAdd.toJson();
 
-    List messageCardList = [messageCardData];
+//     List messageCardList = [messageCardData];
 
-    await firestoreInstance.collection(USERS_COLLECTION).doc(firebaseUser.uid).update({
+//     await firestoreInstance.collection(USERS_COLLECTION).doc(firebaseUser.uid).update({
 
-      SECOND_ADDITIONAL_MESSAGES_FIELD : FieldValue.arrayUnion(messageCardList)
+//       SECOND_ADDITIONAL_MESSAGES_FIELD : FieldValue.arrayUnion(messageCardList)
 
-    });
-  }
+//     });
+//   }
 
-  @override
-  void addSocialMessage(auth.User firebaseUser, MessageCard messageCardToAdd) async {
+//   @override
+//   void addSocialMessage(auth.User firebaseUser, MessageCard messageCardToAdd) async {
 
-    Map messageCardData = messageCardToAdd.toJson();
+//     Map messageCardData = messageCardToAdd.toJson();
 
-    List messageCardList = [messageCardData];
+//     List messageCardList = [messageCardData];
 
-    await firestoreInstance.collection(USERS_COLLECTION).doc(firebaseUser.uid).update({
+//     await firestoreInstance.collection(USERS_COLLECTION).doc(firebaseUser.uid).update({
 
-      SOCIAL_MESSAGES_FIELD : FieldValue.arrayUnion(messageCardList)
+//       SOCIAL_MESSAGES_FIELD : FieldValue.arrayUnion(messageCardList)
 
-    });
-  }
+//     });
+//   }
 
-  @override
-  void addReplyLaterMessage(auth.User firebaseUser, MessageCard replyLaterMessageCard) async {
+//   @override
+//   void addReplyLaterMessage(auth.User firebaseUser, MessageCard replyLaterMessageCard) async {
 
-    Map messageCardData = replyLaterMessageCard.toJson();
+//     Map messageCardData = replyLaterMessageCard.toJson();
 
-    List messageCardList = [messageCardData];
+//     List messageCardList = [messageCardData];
 
-    await firestoreInstance.collection(USERS_COLLECTION).doc(firebaseUser.uid).update({
+//     await firestoreInstance.collection(USERS_COLLECTION).doc(firebaseUser.uid).update({
 
-      REPLY_LATER_MESSAGE_FIELD : messageCardList
+//       REPLY_LATER_MESSAGE_FIELD : messageCardList
 
-    });
+//     });
 
-  }
+//   }
 
-  @override
-  void deleteBusinessMessage(auth.User firebaseUser, MessageCard messageCardToDelete) async {
+//   @override
+//   void deleteBusinessMessage(auth.User firebaseUser, MessageCard messageCardToDelete) async {
 
-    Map messageCardData = messageCardToDelete.toJson();
+//     Map messageCardData = messageCardToDelete.toJson();
 
-    List messageCardList = [messageCardData];
+//     List messageCardList = [messageCardData];
 
-    await firestoreInstance.collection(USERS_COLLECTION).doc(firebaseUser.uid).update({
+//     await firestoreInstance.collection(USERS_COLLECTION).doc(firebaseUser.uid).update({
 
-      BUSINESS_MESSAGES_FIELD : FieldValue.arrayRemove(messageCardList)
+//       BUSINESS_MESSAGES_FIELD : FieldValue.arrayRemove(messageCardList)
 
-    });
-  }
+//     });
+//   }
 
-  @override
-  void deleteFirstAdditionalMessage(auth.User firebaseUser, MessageCard messageCardToDelete) async {
+//   @override
+//   void deleteFirstAdditionalMessage(auth.User firebaseUser, MessageCard messageCardToDelete) async {
 
-    Map messageCardData = messageCardToDelete.toJson();
+//     Map messageCardData = messageCardToDelete.toJson();
 
-    List messageCardList = [messageCardData];
+//     List messageCardList = [messageCardData];
 
-    await firestoreInstance.collection(USERS_COLLECTION).doc(firebaseUser.uid).update({
+//     await firestoreInstance.collection(USERS_COLLECTION).doc(firebaseUser.uid).update({
 
-      FIRST_ADDITIONAL_MESSAGES_FIELD : FieldValue.arrayRemove(messageCardList)
+//       FIRST_ADDITIONAL_MESSAGES_FIELD : FieldValue.arrayRemove(messageCardList)
 
-    });
-  }
+//     });
+//   }
 
-  @override
-  void deletePersonalMessage(auth.User firebaseUser, MessageCard messageCardToDelete) async {
+//   @override
+//   void deletePersonalMessage(auth.User firebaseUser, MessageCard messageCardToDelete) async {
 
-    Map messageCardData = messageCardToDelete.toJson();
+//     Map messageCardData = messageCardToDelete.toJson();
 
-    List messageCardList = [messageCardData];
+//     List messageCardList = [messageCardData];
 
-    await firestoreInstance.collection(USERS_COLLECTION).doc(firebaseUser.uid).update({
+//     await firestoreInstance.collection(USERS_COLLECTION).doc(firebaseUser.uid).update({
 
-      PERSONAL_MESSAGES_FIELD : FieldValue.arrayRemove(messageCardList)
+//       PERSONAL_MESSAGES_FIELD : FieldValue.arrayRemove(messageCardList)
 
-    });
-  }
+//     });
+//   }
 
-  @override
-  void deleteSecondAdditionalMessage(auth.User firebaseUser, MessageCard messageCardToDelete) async {
+//   @override
+//   void deleteSecondAdditionalMessage(auth.User firebaseUser, MessageCard messageCardToDelete) async {
 
-    Map messageCardData = messageCardToDelete.toJson();
+//     Map messageCardData = messageCardToDelete.toJson();
 
-    List messageCardList = [messageCardData];
+//     List messageCardList = [messageCardData];
 
-    await firestoreInstance.collection(USERS_COLLECTION).doc(firebaseUser.uid).update({
+//     await firestoreInstance.collection(USERS_COLLECTION).doc(firebaseUser.uid).update({
 
-      SECOND_ADDITIONAL_MESSAGES_FIELD : FieldValue.arrayRemove(messageCardList)
+//       SECOND_ADDITIONAL_MESSAGES_FIELD : FieldValue.arrayRemove(messageCardList)
 
-    });
-  }
+//     });
+//   }
 
-  @override
-  void deleteSocialMessage(auth.User firebaseUser, MessageCard messageCardToDelete) async {
+//   @override
+//   void deleteSocialMessage(auth.User firebaseUser, MessageCard messageCardToDelete) async {
 
-    Map messageCardData = messageCardToDelete.toJson();
+//     Map messageCardData = messageCardToDelete.toJson();
 
-    List messageCardList = [messageCardData];
+//     List messageCardList = [messageCardData];
 
-    await firestoreInstance.collection(USERS_COLLECTION).doc(firebaseUser.uid).update({
+//     await firestoreInstance.collection(USERS_COLLECTION).doc(firebaseUser.uid).update({
 
-      SOCIAL_MESSAGES_FIELD : FieldValue.arrayRemove(messageCardList)
+//       SOCIAL_MESSAGES_FIELD : FieldValue.arrayRemove(messageCardList)
 
-    });
-  }
+//     });
+//   }
 
-  @override
-  void editBusinessMessage(auth.User firebaseUser, MessageCard oldMessageCard, MessageCard newMessageCard) async {
+//   @override
+//   void editBusinessMessage(auth.User firebaseUser, MessageCard oldMessageCard, MessageCard newMessageCard) async {
 
-    /// Delete the oldMessageCard first
-    Map oldMessageCardData = oldMessageCard.toJson();
+//     /// Delete the oldMessageCard first
+//     Map oldMessageCardData = oldMessageCard.toJson();
 
-    List oldMessageCardList = [oldMessageCardData];
+//     List oldMessageCardList = [oldMessageCardData];
 
-    await firestoreInstance.collection(USERS_COLLECTION).doc(firebaseUser.uid).update({
+//     await firestoreInstance.collection(USERS_COLLECTION).doc(firebaseUser.uid).update({
 
-      BUSINESS_MESSAGES_FIELD : FieldValue.arrayRemove(oldMessageCardList)
+//       BUSINESS_MESSAGES_FIELD : FieldValue.arrayRemove(oldMessageCardList)
 
-    });
+//     });
 
-    /// Then add the newMessageCard
-    Map newMessageCardData = newMessageCard.toJson();
+//     /// Then add the newMessageCard
+//     Map newMessageCardData = newMessageCard.toJson();
 
-    List newMessageCardList = [newMessageCardData];
+//     List newMessageCardList = [newMessageCardData];
 
-    await firestoreInstance.collection(USERS_COLLECTION).doc(firebaseUser.uid).update({
+//     await firestoreInstance.collection(USERS_COLLECTION).doc(firebaseUser.uid).update({
 
-      BUSINESS_MESSAGES_FIELD : FieldValue.arrayUnion(newMessageCardList)
+//       BUSINESS_MESSAGES_FIELD : FieldValue.arrayUnion(newMessageCardList)
 
-    });
-  }
+//     });
+//   }
 
-  @override
-  void editFirstAdditionalMessage(auth.User firebaseUser, MessageCard oldMessageCard, MessageCard newMessageCard) async {
+//   @override
+//   void editFirstAdditionalMessage(auth.User firebaseUser, MessageCard oldMessageCard, MessageCard newMessageCard) async {
 
-    /// Delete the oldMessageCard first
-    Map oldMessageCardData = oldMessageCard.toJson();
+//     /// Delete the oldMessageCard first
+//     Map oldMessageCardData = oldMessageCard.toJson();
 
-    List oldMessageCardList = [oldMessageCardData];
+//     List oldMessageCardList = [oldMessageCardData];
 
-    await firestoreInstance.collection(USERS_COLLECTION).doc(firebaseUser.uid).update({
+//     await firestoreInstance.collection(USERS_COLLECTION).doc(firebaseUser.uid).update({
 
-      FIRST_ADDITIONAL_MESSAGES_FIELD : FieldValue.arrayRemove(oldMessageCardList)
+//       FIRST_ADDITIONAL_MESSAGES_FIELD : FieldValue.arrayRemove(oldMessageCardList)
 
-    });
+//     });
 
-    /// Then add the newMessageCard
-    Map newMessageCardData = newMessageCard.toJson();
+//     /// Then add the newMessageCard
+//     Map newMessageCardData = newMessageCard.toJson();
 
-    List newMessageCardList = [newMessageCardData];
+//     List newMessageCardList = [newMessageCardData];
 
-    await firestoreInstance.collection(USERS_COLLECTION).doc(firebaseUser.uid).update({
+//     await firestoreInstance.collection(USERS_COLLECTION).doc(firebaseUser.uid).update({
 
-      FIRST_ADDITIONAL_MESSAGES_FIELD : FieldValue.arrayUnion(newMessageCardList)
+//       FIRST_ADDITIONAL_MESSAGES_FIELD : FieldValue.arrayUnion(newMessageCardList)
 
-    });
-  }
+//     });
+//   }
 
-  @override
-  void editPersonalMessage(auth.User firebaseUser, MessageCard oldMessageCard, MessageCard newMessageCard) async {
+//   @override
+//   void editPersonalMessage(auth.User firebaseUser, MessageCard oldMessageCard, MessageCard newMessageCard) async {
 
-    /// Delete the oldMessageCard first
-    Map oldMessageCardData = oldMessageCard.toJson();
+//     /// Delete the oldMessageCard first
+//     Map oldMessageCardData = oldMessageCard.toJson();
 
-    List oldMessageCardList = [oldMessageCardData];
+//     List oldMessageCardList = [oldMessageCardData];
 
-    await firestoreInstance.collection(USERS_COLLECTION).doc(firebaseUser.uid).update({
+//     await firestoreInstance.collection(USERS_COLLECTION).doc(firebaseUser.uid).update({
 
-      PERSONAL_MESSAGES_FIELD : FieldValue.arrayRemove(oldMessageCardList)
+//       PERSONAL_MESSAGES_FIELD : FieldValue.arrayRemove(oldMessageCardList)
 
-    });
+//     });
 
-    /// Then add the newMessageCard
-    Map newMessageCardData = newMessageCard.toJson();
+//     /// Then add the newMessageCard
+//     Map newMessageCardData = newMessageCard.toJson();
 
-    List newMessageCardList = [newMessageCardData];
+//     List newMessageCardList = [newMessageCardData];
 
-    await firestoreInstance.collection(USERS_COLLECTION).doc(firebaseUser.uid).update({
+//     await firestoreInstance.collection(USERS_COLLECTION).doc(firebaseUser.uid).update({
 
-      PERSONAL_MESSAGES_FIELD : FieldValue.arrayUnion(newMessageCardList)
+//       PERSONAL_MESSAGES_FIELD : FieldValue.arrayUnion(newMessageCardList)
 
-    });
+//     });
 
-  }
+//   }
 
-  @override
-  void editSecondAdditionalMessage(auth.User firebaseUser, MessageCard oldMessageCard, MessageCard newMessageCard) async {
+//   @override
+//   void editSecondAdditionalMessage(auth.User firebaseUser, MessageCard oldMessageCard, MessageCard newMessageCard) async {
 
-    /// Delete the oldMessageCard first
-    Map oldMessageCardData = oldMessageCard.toJson();
+//     /// Delete the oldMessageCard first
+//     Map oldMessageCardData = oldMessageCard.toJson();
 
-    List oldMessageCardList = [oldMessageCardData];
+//     List oldMessageCardList = [oldMessageCardData];
 
-    await firestoreInstance.collection(USERS_COLLECTION).doc(firebaseUser.uid).update({
+//     await firestoreInstance.collection(USERS_COLLECTION).doc(firebaseUser.uid).update({
 
-      SECOND_ADDITIONAL_MESSAGES_FIELD : FieldValue.arrayRemove(oldMessageCardList)
+//       SECOND_ADDITIONAL_MESSAGES_FIELD : FieldValue.arrayRemove(oldMessageCardList)
 
-    });
+//     });
 
-    /// Then add the newMessageCard
-    Map newMessageCardData = newMessageCard.toJson();
+//     /// Then add the newMessageCard
+//     Map newMessageCardData = newMessageCard.toJson();
 
-    List newMessageCardList = [newMessageCardData];
+//     List newMessageCardList = [newMessageCardData];
 
-    await firestoreInstance.collection(USERS_COLLECTION).doc(firebaseUser.uid).update({
+//     await firestoreInstance.collection(USERS_COLLECTION).doc(firebaseUser.uid).update({
 
-      SECOND_ADDITIONAL_MESSAGES_FIELD : FieldValue.arrayUnion(newMessageCardList)
+//       SECOND_ADDITIONAL_MESSAGES_FIELD : FieldValue.arrayUnion(newMessageCardList)
 
-    });
-  }
+//     });
+//   }
 
-  @override
-  void editSocialMessage(auth.User firebaseUser, MessageCard oldMessageCard, MessageCard newMessageCard) async {
-    /// Delete the oldMessageCard first
-    Map oldMessageCardData = oldMessageCard.toJson();
+//   @override
+//   void editSocialMessage(auth.User firebaseUser, MessageCard oldMessageCard, MessageCard newMessageCard) async {
+//     /// Delete the oldMessageCard first
+//     Map oldMessageCardData = oldMessageCard.toJson();
 
-    List oldMessageCardList = [oldMessageCardData];
+//     List oldMessageCardList = [oldMessageCardData];
 
-    await firestoreInstance.collection(USERS_COLLECTION).doc(firebaseUser.uid).update({
+//     await firestoreInstance.collection(USERS_COLLECTION).doc(firebaseUser.uid).update({
 
-      SOCIAL_MESSAGES_FIELD : FieldValue.arrayRemove(oldMessageCardList)
+//       SOCIAL_MESSAGES_FIELD : FieldValue.arrayRemove(oldMessageCardList)
 
-    });
+//     });
 
-    /// Then add the newMessageCard
-    Map newMessageCardData = newMessageCard.toJson();
+//     /// Then add the newMessageCard
+//     Map newMessageCardData = newMessageCard.toJson();
 
-    List newMessageCardList = [newMessageCardData];
+//     List newMessageCardList = [newMessageCardData];
 
-    await firestoreInstance.collection(USERS_COLLECTION).doc(firebaseUser.uid).update({
+//     await firestoreInstance.collection(USERS_COLLECTION).doc(firebaseUser.uid).update({
 
-      SOCIAL_MESSAGES_FIELD : FieldValue.arrayUnion(newMessageCardList)
+//       SOCIAL_MESSAGES_FIELD : FieldValue.arrayUnion(newMessageCardList)
 
-    });
-  }
+//     });
+//   }
 
 
 
@@ -571,4 +571,4 @@ class FirebaseRepository with ChangeNotifier implements RepositoryInterface {
 
 
 
-}
+// }

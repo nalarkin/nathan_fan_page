@@ -37,6 +37,8 @@ class AuthService {
 
   // sign in with email and password
   Future signInWithEmailAndPassword(String email, String password) async {
+    print(
+        'calling signInWithEmailAndPassword. email: $email password $password');
     try {
       UserCredential result = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
@@ -65,46 +67,31 @@ class AuthService {
     } catch (e) {
       print(e);
     }
+  }
 
-    // register with email and password
-    // Future updateUserInfo(String firstName, String lastName) async {
-    //   try {
-    //     UserCredential result = await _auth.createUserWithEmailAndPassword(
-    //         email: email, password: password);
-    //     User? currUser = result.user;
-    //     await DatabaseService(uid: currUser?.uid as String)
-    //         .setUserData('dummyFirst', 'dummyLast', 'dummyRole');
-    //     return _userFromFirebase(currUser);
-    //   } catch (e) {
-    //     print(e.toString());
-    //     return null;
-    //   }
-    // }
-
-    // register with email and password
-    Future registerWithEmailAndPassword(String email, String password,
-        String firstName, String lastName) async {
-      try {
-        UserCredential result = await _auth.createUserWithEmailAndPassword(
-            email: email, password: password);
-        User? currUser = result.user;
-        await DatabaseService(uid: currUser?.uid as String)
-            .setUserData(firstName, lastName, 'Customer');
-        return _userFromFirebase(currUser);
-      } catch (e) {
-        print(e.toString());
-        return null;
-      }
+  // register with email and password
+  Future registerWithEmailAndPassword(
+      String email, String password, String firstName, String lastName) async {
+    try {
+      UserCredential result = await _auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+      User? currUser = result.user;
+      await DatabaseService(uid: currUser?.uid as String)
+          .setUserData(firstName, lastName, 'Customer');
+      return _userFromFirebase(currUser);
+    } catch (e) {
+      print(e.toString());
+      return null;
     }
+  }
 
-    // sign out
-    Future signOut() async {
-      try {
-        return await _auth.signOut();
-      } catch (e) {
-        print(e);
-        return null;
-      }
+  // sign out
+  Future signOut() async {
+    try {
+      return await _auth.signOut();
+    } catch (e) {
+      print(e);
+      return null;
     }
   }
 }

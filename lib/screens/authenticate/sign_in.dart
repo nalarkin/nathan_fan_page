@@ -16,8 +16,8 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
-  // final AuthService _auth = AuthService();
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final AuthService _auth = AuthService();
+  // final FirebaseAuth _auth = FirebaseAuth.instance;
   final _formKey = new GlobalKey<FormState>();
   bool loading = false;
 
@@ -91,7 +91,7 @@ class _SignInState extends State<SignIn> {
                               setState(() => loading = true);
                               dynamic result = await _auth
                                   .signInWithEmailAndPassword(email, password);
-                                  _auth.sign
+                              // _auth.sign
 
                               if (result == null) {
                                 setState(() {
@@ -110,8 +110,12 @@ class _SignInState extends State<SignIn> {
                           style: ElevatedButton.styleFrom(
                               primary: Colors.pink[400]),
                           onPressed: () async {
-                              await _signInWithGoogle(_auth);
-                            
+                            dynamic result = await _auth.signInWithGoogle();
+                            if (result == null) {
+                              print('error. Gooogle sign in resulted in null.');
+                            } else {
+                              print('Google sign in returned: $result');
+                            }
                           },
                           child: Text(
                             "Sign in",
@@ -185,32 +189,32 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
 }
 
 
- Future<void> _signInWithGoogle(AuthService _auth) async {
-    try {
-      UserCredential userCredential;
+//  Future<void> _signInWithGoogle(AuthService _auth) async {
+//     try {
+//       UserCredential userCredential;
 
-      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-      final GoogleSignInAuthentication? googleAuth =
-          await googleUser?.authentication;
-      final googleAuthCredential = GoogleAuthProvider.credential(
-        accessToken: googleAuth?.accessToken,
-        idToken: googleAuth?.idToken,
+//       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+//       final GoogleSignInAuthentication? googleAuth =
+//           await googleUser?.authentication;
+//       final googleAuthCredential = GoogleAuthProvider.credential(
+//         accessToken: googleAuth?.accessToken,
+//         idToken: googleAuth?.idToken,
       
-      userCredential = await _auth.signInWithCredential(googleAuthCredential);
+//       userCredential = await _auth.signInWithCredential(googleAuthCredential);
       
       
 
-      final user = userCredential.user;
-      Scaffold.of(context).showSnackBar(SnackBar(
-        content: Text('Sign In ${user.uid} with Google'),
-      ));
-    } catch (e) {
-      print(e);
-      Scaffold.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Failed to sign in with Google: $e'),
-        ),
-      );
-    }
-  }
-}
+//       final user = userCredential.user;
+//       Scaffold.of(context).showSnackBar(SnackBar(
+//         content: Text('Sign In ${user.uid} with Google'),
+//       ));
+//     } catch (e) {
+//       print(e);
+//       Scaffold.of(context).showSnackBar(
+//         SnackBar(
+//           content: Text('Failed to sign in with Google: $e'),
+//         ),
+//       );
+//     }
+//   }
+// }
