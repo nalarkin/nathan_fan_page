@@ -4,6 +4,7 @@ import 'package:fanpage/shared/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:fanpage/services/authentication.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class SignIn extends StatefulWidget {
   // const SignIn({Key? key}) : super(key: key);
@@ -15,7 +16,8 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
-  final AuthService _auth = AuthService();
+  // final AuthService _auth = AuthService();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   final _formKey = new GlobalKey<FormState>();
   bool loading = false;
 
@@ -89,6 +91,7 @@ class _SignInState extends State<SignIn> {
                               setState(() => loading = true);
                               dynamic result = await _auth
                                   .signInWithEmailAndPassword(email, password);
+                                  _auth.sign
 
                               if (result == null) {
                                 setState(() {
@@ -103,7 +106,18 @@ class _SignInState extends State<SignIn> {
                             style: TextStyle(color: Colors.white),
                           )),
                       SizedBox(height: 20.0),
-                      GoogleSignInButton(),
+                      ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              primary: Colors.pink[400]),
+                          onPressed: () async {
+                              await _signInWithGoogle(_auth);
+                            
+                          },
+                          child: Text(
+                            "Sign in",
+                            style: TextStyle(color: Colors.white),
+                          )),
+                      SizedBox(height: 20.0),
                       SizedBox(height: 12.0),
                       Text(
                         error,
@@ -140,28 +154,7 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
                   ),
                 ),
               ),
-              onPressed: () async {
-                setState(() {
-                  _isSigningIn = true;
-                });
-
-                User? user =
-                    await Authentication.signInWithGoogle(context: context);
-                await _auth.signInWithGoogle(user);
-                setState(() {
-                  _isSigningIn = false;
-                });
-
-                // if (user != null) {
-                //   Navigator.of(context).pushReplacement(
-                //     MaterialPageRoute(
-                //       builder: (context) => UserInfoScreen(
-                //         user: user,
-                //       ),
-                //     ),
-                //   );
-                // }
-              },
+              onPressed: () {}, ///////////// google sign in here
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
                 child: Row(
@@ -188,5 +181,36 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
               ),
             ),
     );
+  }
+}
+
+
+ Future<void> _signInWithGoogle(AuthService _auth) async {
+    try {
+      UserCredential userCredential;
+
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      final GoogleSignInAuthentication? googleAuth =
+          await googleUser?.authentication;
+      final googleAuthCredential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      
+      userCredential = await _auth.signInWithCredential(googleAuthCredential);
+      
+      
+
+      final user = userCredential.user;
+      Scaffold.of(context).showSnackBar(SnackBar(
+        content: Text('Sign In ${user.uid} with Google'),
+      ));
+    } catch (e) {
+      print(e);
+      Scaffold.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Failed to sign in with Google: $e'),
+        ),
+      );
+    }
   }
 }

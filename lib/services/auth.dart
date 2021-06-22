@@ -1,6 +1,7 @@
 import 'package:fanpage/models/user.dart';
 import 'package:fanpage/services/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -47,52 +48,63 @@ class AuthService {
     }
   }
 
-  Future signInWithGoogle(User? user) async {
+  Future<UserCredential?> signInWithGoogle() async {
     try {
-      return _userFromFirebase(user);
-    } catch (e) {
-      print(e.toString());
-      return null;
-    }
-  }
-  // register with email and password
-  // Future updateUserInfo(String firstName, String lastName) async {
-  //   try {
-  //     UserCredential result = await _auth.createUserWithEmailAndPassword(
-  //         email: email, password: password);
-  //     User? currUser = result.user;
-  //     await DatabaseService(uid: currUser?.uid as String)
-  //         .setUserData('dummyFirst', 'dummyLast', 'dummyRole');
-  //     return _userFromFirebase(currUser);
-  //   } catch (e) {
-  //     print(e.toString());
-  //     return null;
-  //   }
-  // }
+      UserCredential userCredential;
 
-  // register with email and password
-  Future registerWithEmailAndPassword(
-      String email, String password, String firstName, String lastName) async {
-    try {
-      UserCredential result = await _auth.createUserWithEmailAndPassword(
-          email: email, password: password);
-      User? currUser = result.user;
-      await DatabaseService(uid: currUser?.uid as String)
-          .setUserData(firstName, lastName, 'Customer');
-      return _userFromFirebase(currUser);
-    } catch (e) {
-      print(e.toString());
-      return null;
-    }
-  }
-
-  // sign out
-  Future signOut() async {
-    try {
-      return await _auth.signOut();
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      final GoogleSignInAuthentication? googleAuth =
+          await googleUser?.authentication;
+      final googleAuthCredential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
+      userCredential = await _auth.signInWithCredential(googleAuthCredential);
+      print("Signed in with google as {$userCredential}");
+      return userCredential;
     } catch (e) {
       print(e);
-      return null;
+    }
+
+    // register with email and password
+    // Future updateUserInfo(String firstName, String lastName) async {
+    //   try {
+    //     UserCredential result = await _auth.createUserWithEmailAndPassword(
+    //         email: email, password: password);
+    //     User? currUser = result.user;
+    //     await DatabaseService(uid: currUser?.uid as String)
+    //         .setUserData('dummyFirst', 'dummyLast', 'dummyRole');
+    //     return _userFromFirebase(currUser);
+    //   } catch (e) {
+    //     print(e.toString());
+    //     return null;
+    //   }
+    // }
+
+    // register with email and password
+    Future registerWithEmailAndPassword(String email, String password,
+        String firstName, String lastName) async {
+      try {
+        UserCredential result = await _auth.createUserWithEmailAndPassword(
+            email: email, password: password);
+        User? currUser = result.user;
+        await DatabaseService(uid: currUser?.uid as String)
+            .setUserData(firstName, lastName, 'Customer');
+        return _userFromFirebase(currUser);
+      } catch (e) {
+        print(e.toString());
+        return null;
+      }
+    }
+
+    // sign out
+    Future signOut() async {
+      try {
+        return await _auth.signOut();
+      } catch (e) {
+        print(e);
+        return null;
+      }
     }
   }
 }
