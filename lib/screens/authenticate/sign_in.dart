@@ -110,15 +110,17 @@ class _SignInState extends State<SignIn> {
                           style: ElevatedButton.styleFrom(
                               primary: Colors.pink[400]),
                           onPressed: () async {
+                            setState(() => loading = true);
                             dynamic result = await _auth.signInWithGoogle();
                             if (result == null) {
                               print('error. Gooogle sign in resulted in null.');
+                              setState(() => loading = false);
                             } else {
                               print('Google sign in returned: $result');
                             }
                           },
                           child: Text(
-                            "Sign in",
+                            "Google Sign In",
                             style: TextStyle(color: Colors.white),
                           )),
                       SizedBox(height: 20.0),

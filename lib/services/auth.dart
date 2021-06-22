@@ -7,9 +7,21 @@ class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   TheUser? _userFromFirebase(User? user) {
-    print("user you want to register is ${user}");
+    // String _userRole = DatabaseService(uid: user?.uid).findUserRole(user, user?.uid);
+    print("Pulling user: ${user} from FirebaseAuth");
+    // print("user role in auth.dart is $_userRole");
+
+    // return user != null
+    //     ? TheUser(
+    //         uid: user.uid,
+    //         registrationDate: user.metadata.creationTime,
+    //         userRole: _userRole)
+    //     : null;
     return user != null
-        ? TheUser(uid: user.uid, registrationDate: user.metadata.creationTime)
+        ? TheUser(
+            uid: user.uid,
+            registrationDate: user.metadata.creationTime,
+          )
         : null;
     // return TheUser(uid: user.uid);
   }

@@ -1,3 +1,4 @@
+import 'package:fanpage/models/user.dart';
 import 'package:fanpage/screens/home/message_form.dart';
 import 'package:fanpage/screens/home/settings_form.dart';
 import 'package:fanpage/screens/transitions/page_transition.dart';
@@ -22,14 +23,25 @@ import 'package:fanpage/models/message.dart';
 
 // way to
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   // const Home({Key? key}) : super(key: key);
+  @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
   final AuthService _auth = AuthService();
-  // final initial = DatabaseService(uid: 'null');
+
+  final userDatabase = DatabaseService(uid: 'null');
+
   final List<Message> initial = [Message(date: Timestamp.now())];
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<TheUser?>(context);
+    // Future<bool> _isAdmin = DatabaseService().isAdmin(user?.uid);
+    DatabaseService().findUserRole(user);
+    // findUserRole
     void _showSettingsPanel() {
       showModalBottomSheet(
           context: context,
@@ -40,7 +52,6 @@ class Home extends StatelessWidget {
             );
           });
     }
-
 
     void _confirmationExit() {
       Widget cancelButton = TextButton(
@@ -101,7 +112,19 @@ class Home extends StatelessWidget {
         ),
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
-          onPressed: () {
+          onPressed: () async {
+            print("user: ${user?.uid}");
+            // Future<bool> _new_isAdmin =
+            //     DatabaseService(uid: user?.uid).isAdmin();
+            // dynamic res = await DatabaseService().isAdmin(user?.uid);
+            // print('_isAdmin = $res');
+            print(user);
+            bool res = DatabaseService().isAdmin(user?.uid ?? '');
+            print('qQuery within home.dart $res');
+            // print('_isAdmin = ${_isAdmin.toString()}');
+            // print('------------');
+            // print(user?.userRole);
+
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => SecondRoute()),
@@ -165,6 +188,7 @@ class _SecondRouteState extends State<SecondRoute> {
                   //     .showSnackBar(SnackBar(content: Text('Processing Data')));
                   DatabaseService()
                       .createMessageData(messageContent, DateTime.now());
+                  // print('_isAdmin = $_isAdmin');
                   Navigator.pop(context);
                 }
               },
@@ -212,3 +236,13 @@ class ConfirmationExit extends StatelessWidget {
 }
 
 
+Widget _getFAB(TheUser? user) {
+    if (user.userRole != 'admin') {
+      return Container();
+    } else {
+      return FloatingActionButton(
+          backgroundColor: Colors.deepOrange[800],
+          child: Icon(Icons.add_shopping_cart),
+          onPressed: null);
+    }
+  }

@@ -2,7 +2,7 @@ class TheUser {
   final String uid;
   final String firstName;
   final String lastName;
-  final String userRole;
+  String userRole;
   final DateTime? registrationDate;
 
   TheUser(
@@ -11,4 +11,10 @@ class TheUser {
       this.lastName = '',
       this.userRole = "Customer",
       this.registrationDate});
+
+  @override
+  String toString() => '$uid $firstName $lastName $userRole $registrationDate';
+  // Future getRole() async {
+
+  // }
 }
