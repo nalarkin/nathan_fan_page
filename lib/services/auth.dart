@@ -136,7 +136,7 @@ class AuthService {
           email: email, password: password);
       User? currUser = result.user;
       await DatabaseService(uid: currUser?.uid as String)
-          .setUserData(firstName, lastName, 'Customer');
+          .setUserData(firstName, lastName, 'Customer', email);
       return _userFromFirebase(currUser);
     } catch (e) {
       print(e.toString());

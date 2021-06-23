@@ -1,16 +1,38 @@
-# fanpage
+# Nathan's Fan App
 
-A new Flutter project.
+## How to run Code:
 
-## Getting Started
+1. Have all requirements downloaded
+2. copy dependencies in `pubspec.yaml` file.
+3. type`flutter pub get` to install required plugins that were listed in the new `pubspec.yaml file`
+4. type `flutter run`
 
-This project is a starting point for a Flutter application.
+## Build ID: 
 
-A few resources to get you started if this is your first Flutter project:
+`com.nlarkin1.fanpage`
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+## Requirements:
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+* files that were edited within `android/app/scr/main/res/  (necessary for splash screen)
+* update contents in `android/app/src/AndroidManifest.xml`
+* have all files in `/lib` downloaded
+* Android SDK >= 21
+* flutter 2.0+ is downloaded and installed
+* compatible on Android and Web (Chrome OS)
+
+
+
+## Web app specific requirements:
+
+* download and copy the contents within the `/web/` folder. The most important are the contents of the `index.html`file.
+
+## Video Examples.
+
+### [Splash Screen](https://youtu.be/0cjgtCA01m0)
+
+### [Admin View + Message Creation + Google Sign In](https://youtu.be/JXGyWYnpMxc)
+
+### [Register with Email + Sign Out](https://youtu.be/oW0Cyc04Glo)
+
+### [BONUS FEATURE: Change Existing Users First and Last Name](https://youtu.be/2m-U1FX08Kk)
+
