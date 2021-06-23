@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:fanpage/models/brew.dart';
+import 'package:fanpage/models/message.dart';
 
-class BrewTile extends StatelessWidget {
+class MessageTile extends StatelessWidget {
   // const BrewTile({Key? key}) : super(key: key);
-  final Brew brew;
+  final Message message;
 
-  BrewTile({required this.brew});
+  MessageTile({required this.message});
 
   @override
   Widget build(BuildContext context) {
@@ -16,10 +16,10 @@ class BrewTile extends StatelessWidget {
           child: ListTile(
             leading: CircleAvatar(
               radius: 25.0,
-              backgroundColor: Colors.brown[brew.strength as int],
+              backgroundColor: Colors.brown[500],
             ),
-            title: Text(brew.name as String),
-            subtitle: Text('Takes ${brew.sugars as String} sugar(s)'),
+            title: Text(message.date.toDate().toString()),
+            subtitle: Text(message.content),
           ),
         ));
   }

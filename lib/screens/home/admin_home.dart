@@ -24,16 +24,16 @@ import 'package:provider/provider.dart';
 
 // way to
 
-class Home extends StatefulWidget {
+class AdminHome extends StatefulWidget {
   // const Home({Key? key}) : super(key: key);
   TheUser? initialUser;
-  Home({required this.initialUser});
+  AdminHome({required this.initialUser});
 
   @override
-  _HomeState createState() => _HomeState(initialUser: initialUser);
+  _AdminHomeState createState() => _AdminHomeState(initialUser: initialUser);
 }
 
-class _HomeState extends State<Home> {
+class _AdminHomeState extends State<AdminHome> {
   final AuthService _auth = AuthService();
 
   final userDatabase = DatabaseService(uid: 'null');
@@ -44,7 +44,7 @@ class _HomeState extends State<Home> {
 
   final List<Message> initial = [Message(date: Timestamp.now())];
   TheUser? initialUser;
-  _HomeState({this.initialUser});
+  _AdminHomeState({this.initialUser});
 
   // DatabaseService().isAdmin(initialUser).then
 
@@ -163,30 +163,28 @@ class _HomeState extends State<Home> {
         body: Center(
           child: Messages(),
         ),
-        floatingActionButton: user?.uid != 'l8fO4b6jVQa7p4qD3hFARHxTKtB2'
-            ? Container()
-            : FloatingActionButton(
-                child: Icon(Icons.add),
-                onPqressed: () async {
-                  print("user: ${user?.uid}");
-                  // Future<bool> _new_isAdmin =
-                  //     DatabaseService(uid: user?.uid).isAdmin();
-                  // dynamic res = await DatabaseService().isAdmin(user?.uid);
-                  // print('_isAdmin = $res');
-                  // print(__isAdmin);
-                  print(user);
-                  // bool res = DatabaseService().isAdmin(user?.uid ?? '');
-                  // print('qQuery within home.dart $res');
-                  // print('_isAdmin = ${_isAdmin.toString()}');
-                  // print('------------');
-                  // print(user?.userRole);
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.add),
+          onPressed: () async {
+            print("user: ${user?.uid}");
+            // Future<bool> _new_isAdmin =
+            //     DatabaseService(uid: user?.uid).isAdmin();
+            // dynamic res = await DatabaseService().isAdmin(user?.uid);
+            // print('_isAdmin = $res');
+            // print(__isAdmin);
+            print(user);
+            // bool res = DatabaseService().isAdmin(user?.uid ?? '');
+            // print('qQuery within home.dart $res');
+            // print('_isAdmin = ${_isAdmin.toString()}');
+            // print('------------');
+            // print(user?.userRole);
 
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => SecondRoute()),
-                  );
-                },
-              ),
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => SecondRoute()),
+            );
+          },
+        ),
       ),
     );
   }

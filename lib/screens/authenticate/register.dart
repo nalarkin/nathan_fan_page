@@ -19,12 +19,15 @@ class _RegisterState extends State<Register> {
   // text field state
   String email = '';
   String password = '';
+  String firstName = '';
+  String lastName = '';
   String error = '';
   @override
   Widget build(BuildContext context) {
     return loading
         ? Loading()
         : Scaffold(
+            resizeToAvoidBottomInset: false,
             backgroundColor: Colors.brown[100],
             appBar: AppBar(
               backgroundColor: Colors.brown[400],
@@ -45,7 +48,7 @@ class _RegisterState extends State<Register> {
                   key: _formKey,
                   child: Column(
                     children: <Widget>[
-                      SizedBox(height: 20.0),
+                      SizedBox(height: 15.0),
                       TextFormField(
                         decoration:
                             textInputDecoration.copyWith(hintText: 'Email'),
@@ -60,7 +63,7 @@ class _RegisterState extends State<Register> {
                           });
                         },
                       ),
-                      SizedBox(height: 20.0),
+                      SizedBox(height: 15.0),
                       TextFormField(
                         decoration:
                             textInputDecoration.copyWith(hintText: 'Password'),
@@ -76,16 +79,50 @@ class _RegisterState extends State<Register> {
                           });
                         },
                       ),
-                      SizedBox(height: 20.0),
+                      SizedBox(height: 15.0),
+                      TextFormField(
+                        decoration: textInputDecoration.copyWith(
+                            hintText: 'First Name'),
+                        obscureText: true,
+                        validator: (val) {
+                          return (val?.length ?? 0) < 1
+                              ? 'First Name Required.'
+                              : null;
+                        },
+                        onChanged: (val) {
+                          setState(() {
+                            firstName = val;
+                          });
+                        },
+                      ),
+                      SizedBox(height: 15.0),
+                      TextFormField(
+                        decoration:
+                            textInputDecoration.copyWith(hintText: 'Last Name'),
+                        obscureText: true,
+                        validator: (val) {
+                          return (val?.length ?? 0) < 1
+                              ? 'Last Name Required.'
+                              : null;
+                        },
+                        onChanged: (val) {
+                          setState(() {
+                            lastName = val;
+                          });
+                        },
+                      ),
+                      SizedBox(height: 15.0),
                       ElevatedButton(
                           style: ElevatedButton.styleFrom(
                               primary: Colors.pink[400]),
                           onPressed: () async {
                             if (_formKey.currentState?.validate() as bool) {
                               setState(() => loading = true);
+
                               dynamic result =
                                   await _auth.registerWithEmailAndPassword(
-                                      email, password);
+                                      email, password, firstName, lastName);
+
                               if (result == null) {
                                 setState(() {
                                   error = 'register with a valid email';
@@ -98,10 +135,10 @@ class _RegisterState extends State<Register> {
                             "Register",
                             style: TextStyle(color: Colors.white),
                           )),
-                      SizedBox(height: 12.0),
+                      SizedBox(height: 5.0),
                       Text(
                         error,
-                        style: TextStyle(color: Colors.red, fontSize: 14.0),
+                        style: TextStyle(color: Colors.red, fontSize: 8.0),
                       )
                     ],
                   ),

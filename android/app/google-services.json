@@ -14,6 +14,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "510530156552-tdqk403blqvsu6soovkqieoe86mcrpfm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nlarkin1.fanpage",
+            "certificate_hash": "f86f924ca00dbe64dd583bc347b5e5f367ec21b2"
+          }
+        },
+        {
+          "client_id": "510530156552-ud4etn3kcepd8ajushee7jnknsjhu5ia.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nlarkin1.fanpage",
+            "certificate_hash": "dbcde78e193b7a078af4666f4d3e5afd03ca8b1f"
+          }
+        },
+        {
           "client_id": "510530156552-tvsufrn5840aofidp8sk3mh0biqutal1.apps.googleusercontent.com",
           "client_type": 3
         }

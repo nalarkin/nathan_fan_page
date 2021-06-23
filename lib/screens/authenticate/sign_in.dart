@@ -2,6 +2,10 @@ import 'package:fanpage/services/auth.dart';
 import 'package:fanpage/shared/constants.dart';
 import 'package:fanpage/shared/loading.dart';
 import 'package:flutter/material.dart';
+import 'package:fanpage/services/authentication.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:auth_buttons/auth_buttons.dart';
 
 class SignIn extends StatefulWidget {
   // const SignIn({Key? key}) : super(key: key);
@@ -14,6 +18,7 @@ class SignIn extends StatefulWidget {
 
 class _SignInState extends State<SignIn> {
   final AuthService _auth = AuthService();
+  // final FirebaseAuth _auth = FirebaseAuth.instance;
   final _formKey = new GlobalKey<FormState>();
   bool loading = false;
 
@@ -29,7 +34,7 @@ class _SignInState extends State<SignIn> {
         : Scaffold(
             backgroundColor: Colors.brown[100],
             appBar: AppBar(
-              backgroundColor: Colors.brown[400],
+              backgroundColor: Colors.blue[900],
               elevation: 0.0,
               title: Text('Sign in to Nates Fans'),
               actions: <Widget>[
@@ -87,6 +92,7 @@ class _SignInState extends State<SignIn> {
                               setState(() => loading = true);
                               dynamic result = await _auth
                                   .signInWithEmailAndPassword(email, password);
+                              // _auth.sign
 
                               if (result == null) {
                                 setState(() {
@@ -100,6 +106,20 @@ class _SignInState extends State<SignIn> {
                             "Sign in",
                             style: TextStyle(color: Colors.white),
                           )),
+                      SizedBox(height: 20.0),
+                      GoogleAuthButton(
+                        onPressed: () async {
+                          setState(() => loading = true);
+                          dynamic result = await _auth.signInWithGoogle();
+                          if (result == null) {
+                            print('error. Gooogle sign in resulted in null.');
+                            setState(() => loading = false);
+                          } else {
+                            print('Google sign in returned: $result');
+                          }
+                        },
+                      ),
+                      SizedBox(height: 20.0),
                       SizedBox(height: 12.0),
                       Text(
                         error,
@@ -108,5 +128,60 @@ class _SignInState extends State<SignIn> {
                     ],
                   ),
                 )));
+  }
+}
+
+class GoogleSignInButton extends StatefulWidget {
+  @override
+  _GoogleSignInButtonState createState() => _GoogleSignInButtonState();
+}
+
+class _GoogleSignInButtonState extends State<GoogleSignInButton> {
+  bool _isSigningIn = false;
+  final AuthService _auth = AuthService();
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16.0),
+      child: _isSigningIn
+          ? CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+            )
+          : OutlinedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.white),
+                shape: MaterialStateProperty.all(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(40),
+                  ),
+                ),
+              ),
+              onPressed: () {}, ///////////// google sign in here
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Image(
+                      image: AssetImage("assets/google_logo.png"),
+                      height: 35.0,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: Text(
+                        'Sign in with Google',
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.black54,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+    );
   }
 }
