@@ -1,7 +1,6 @@
 import 'package:fanpage/models/user.dart';
 import 'package:fanpage/screens/home/message_form.dart';
 import 'package:fanpage/screens/home/settings_form.dart';
-import 'package:fanpage/screens/transitions/page_transition.dart';
 import 'package:fanpage/services/auth.dart';
 import 'package:fanpage/shared/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';

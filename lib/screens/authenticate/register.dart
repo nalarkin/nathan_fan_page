@@ -30,7 +30,7 @@ class _RegisterState extends State<Register> {
             resizeToAvoidBottomInset: false,
             backgroundColor: Colors.brown[100],
             appBar: AppBar(
-              backgroundColor: Colors.brown[400],
+              backgroundColor: Colors.blue[900],
               elevation: 0.0,
               title: Text('Sign up to Nates Fans'),
               actions: <Widget>[
@@ -54,7 +54,7 @@ class _RegisterState extends State<Register> {
                             textInputDecoration.copyWith(hintText: 'Email'),
                         validator: (val) {
                           return (val?.isEmpty as bool)
-                              ? 'Enter and email'
+                              ? 'Enter an email'
                               : null;
                         },
                         onChanged: (val) {
@@ -83,7 +83,6 @@ class _RegisterState extends State<Register> {
                       TextFormField(
                         decoration: textInputDecoration.copyWith(
                             hintText: 'First Name'),
-                        obscureText: true,
                         validator: (val) {
                           return (val?.length ?? 0) < 1
                               ? 'First Name Required.'
@@ -99,7 +98,6 @@ class _RegisterState extends State<Register> {
                       TextFormField(
                         decoration:
                             textInputDecoration.copyWith(hintText: 'Last Name'),
-                        obscureText: true,
                         validator: (val) {
                           return (val?.length ?? 0) < 1
                               ? 'Last Name Required.'

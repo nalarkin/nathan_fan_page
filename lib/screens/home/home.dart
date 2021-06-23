@@ -1,7 +1,6 @@
 import 'package:fanpage/models/user.dart';
 import 'package:fanpage/screens/home/message_form.dart';
 import 'package:fanpage/screens/home/settings_form.dart';
-import 'package:fanpage/screens/transitions/page_transition.dart';
 import 'package:fanpage/services/auth.dart';
 import 'package:fanpage/shared/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -12,17 +11,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fanpage/screens/home/message_list.dart';
 import 'package:fanpage/models/message.dart';
 import 'package:provider/provider.dart';
-
-// Various ways to solve common  use cases
-// https://flutter.dev/docs/cookbook
-
-// Possible way to retrieve textfield input
-// https://flutter.dev/docs/cookbook/forms/retrieve-input
-
-// Way to route admin to create a message
-// https://flutter.dev/docs/cookbook/animation/page-route-animation#1-set-up-a-pageroutebuilder
-
-// way to
 
 class Home extends StatefulWidget {
   // const Home({Key? key}) : super(key: key);
@@ -141,7 +129,7 @@ class _HomeState extends State<Home> {
       value: DatabaseService().messages,
       initialData: initial,
       child: Scaffold(
-        backgroundColor: Colors.blue[100],
+        backgroundColor: Colors.brown[100],
         appBar: AppBar(
           title: Text("Nathan's Fans"),
           backgroundColor: Colors.blue[900],
@@ -167,20 +155,7 @@ class _HomeState extends State<Home> {
             ? Container()
             : FloatingActionButton(
                 child: Icon(Icons.add),
-                onPqressed: () async {
-                  print("user: ${user?.uid}");
-                  // Future<bool> _new_isAdmin =
-                  //     DatabaseService(uid: user?.uid).isAdmin();
-                  // dynamic res = await DatabaseService().isAdmin(user?.uid);
-                  // print('_isAdmin = $res');
-                  // print(__isAdmin);
-                  print(user);
-                  // bool res = DatabaseService().isAdmin(user?.uid ?? '');
-                  // print('qQuery within home.dart $res');
-                  // print('_isAdmin = ${_isAdmin.toString()}');
-                  // print('------------');
-                  // print(user?.userRole);
-
+                onPressed: () async {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => SecondRoute()),
