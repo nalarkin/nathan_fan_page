@@ -1,11 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fanpage/models/brew.dart';
 import 'package:fanpage/models/message.dart';
 import 'package:fanpage/models/user.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 
-class DatabaseService {
+class DatabaseService extends ChangeNotifier {
   final String? uid;
   DatabaseService({this.uid});
+  bool _isAdmin = false;
 
   // collection reference
   // final CollectionReference brewCollection =
@@ -31,6 +33,10 @@ class DatabaseService {
     });
   }
 
+  bool get getAdmin {
+    return _isAdmin;
+  }
+
   // Future<String> findUserRole(TheUser? user) async {
   //   String uID = user?.uid ?? '';
   //   if (uID != null) {
@@ -46,7 +52,7 @@ class DatabaseService {
   //         print('user role after change $user');
   //         print('================================');
   //         bool res = (role == 'admin');
-          
+
   //         if (role == 'admin') {
   //           return 'admin';
   //         } else {
@@ -63,25 +69,107 @@ class DatabaseService {
   //   return 'Customer';
   // }
 
-  Future<String> findUserRole(TheUser? user) async {
-    String uID = user?.uid ?? '';
-    if (uID != null) {
-      userCollection.doc(uID).get().then((DocumentSnapshot documentSnapshot) {
-        if (documentSnapshot.exists) {
-          print('Document data: ${documentSnapshot.data()}');
-          dynamic role = documentSnapshot.get('userRole');          
-          if (role == 'admin') {
-            return 'admin';
-          } else {
-            return 'Customer';
-          }
+  // Future<String> findUserRole(TheUser? user) async {
+  //   String uID = user?.uid ?? '';
+  //   if (uID != null) {
+  //     userCollection.doc(uID).get().then((DocumentSnapshot documentSnapshot) {
+  //       if (documentSnapshot.exists) {
+  //         print('Document data: ${documentSnapshot.data()}');
+  //         dynamic role = documentSnapshot.get('userRole');
+  //         if (role == 'admin') {
+  //           return 'admin';
+  //         } else {
+  //           return 'Customer';
+  //         }
+  //       } else {
+  //         print('Document does not exist.');
+  //       }
+  //     });
+  //   }
+  //   return 'Customer';
+  // }
+
+  // Future<String> findUserRole(TheUser? user) async {
+  //   String uID = user?.uid ?? '';
+  //   if (uID != null) {
+  //     userCollection.doc(uID).get().then((DocumentSnapshot documentSnapshot) {
+  //       if (documentSnapshot.exists) {
+  //         print('Document data: ${documentSnapshot.data()}');
+  //         dynamic role = documentSnapshot.get('userRole');
+  //         if (role == 'admin') {
+  //           return 'admin';
+  //         } else {
+  //           return 'Customer';
+  //         }
+  //       } else {
+  //         print('Document does not exist.');
+  //       }
+  //     });
+  //   }
+  //   return 'Customer';
+  // }
+
+  // bool isAdmin(TheUser? user) {
+  //   String uID = user?.uid ?? '1';
+  //   userCollection.doc(uID).get().then((DocumentSnapshot documentSnapshot) {
+  //     if (documentSnapshot.exists) {
+  //       print('Document data: ${documentSnapshot.data()}');
+  //       dynamic role = documentSnapshot.get('userRole');
+  //       if (role == 'admin') {
+  //         print('I CAN SEE ITS ADMIN!!');
+
+  //         return true;
+  //       } else {
+  //         print('I CAN NOT SEE ITS ADMIN');
+  //         return false;
+  //       }
+  //     } else {
+  //       print('Document does not exist.');
+  //     }
+  //   });
+  //   return false;
+  // }
+
+  void isAdmin(TheUser? user) async {
+    String uID = user?.uid ?? '1';
+    userCollection.doc(uID).get().then((DocumentSnapshot documentSnapshot) {
+      if (documentSnapshot.exists) {
+        print('Document data: ${documentSnapshot.data()}');
+        dynamic role = documentSnapshot.get('userRole');
+        if (role == 'admin') {
+          print('I CAN SEE ITS ADMIN!!');
+
+          _isAdmin = true;
+          notifyListeners();
         } else {
-          print('Document does not exist.');
+          print('I CAN NOT SEE ITS ADMIN');
         }
-      });
-    }
-    return 'Customer';
+      } else {
+        print('Document does not exist.');
+      }
+    });
   }
+
+  // Future<bool> isAdmin(TheUser? user) async {
+  //   String uID = user?.uid ?? '1';
+  //   userCollection.doc(uID).get().then((DocumentSnapshot documentSnapshot) {
+  //     if (documentSnapshot.exists) {
+  //       print('Document data: ${documentSnapshot.data()}');
+  //       dynamic role = documentSnapshot.get('userRole');
+  //       if (role == 'admin') {
+  //         print('I CAN SEE ITS ADMIN!!');
+
+  //         return true;
+  //       } else {
+  //         print('I CAN NOT SEE ITS ADMIN');
+  //         return false;
+  //       }
+  //     } else {
+  //       print('Document does not exist.');
+  //     }
+  //   });
+  //   return false;
+  // }
 
   // TheUser? createUser (String uID) {
   //   if (uID != null) {
@@ -105,10 +193,10 @@ class DatabaseService {
   //   }
   // }
 
-  bool isAdmin(String uID) {
-    print(qAdmins.parameters);
-    return true;
-  }
+  // bool isAdmin(String uID) {
+  //   print(qAdmins.parameters);
+  //   return true;
+  // }
 
   // Future<bool> isAdmin(String? uID) async {
   //   if (uID != null) {

@@ -119,14 +119,6 @@ class _SignInState extends State<SignIn> {
                           }
                         },
                       ),
-                      // ElevatedButton(
-                      //     style: ElevatedButton.styleFrom(
-                      //         primary: Colors.pink[400]),
-                      //     onPressed: ()
-                      //     child: Text(
-                      //       "Google Sign In",
-                      //       style: TextStyle(color: Colors.white),
-                      //     )),
                       SizedBox(height: 20.0),
                       SizedBox(height: 12.0),
                       Text(
@@ -193,31 +185,3 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
     );
   }
 }
-
-//  Future<void> _signInWithGoogle(AuthService _auth) async {
-//     try {
-//       UserCredential userCredential;
-
-//       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-//       final GoogleSignInAuthentication? googleAuth =
-//           await googleUser?.authentication;
-//       final googleAuthCredential = GoogleAuthProvider.credential(
-//         accessToken: googleAuth?.accessToken,
-//         idToken: googleAuth?.idToken,
-
-//       userCredential = await _auth.signInWithCredential(googleAuthCredential);
-
-//       final user = userCredential.user;
-//       Scaffold.of(context).showSnackBar(SnackBar(
-//         content: Text('Sign In ${user.uid} with Google'),
-//       ));
-//     } catch (e) {
-//       print(e);
-//       Scaffold.of(context).showSnackBar(
-//         SnackBar(
-//           content: Text('Failed to sign in with Google: $e'),
-//         ),
-//       );
-//     }
-//   }
-// }

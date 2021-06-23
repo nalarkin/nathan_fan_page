@@ -24,16 +24,16 @@ import 'package:provider/provider.dart';
 
 // way to
 
-class Home extends StatefulWidget {
+class AdminHome extends StatefulWidget {
   // const Home({Key? key}) : super(key: key);
   TheUser? initialUser;
-  Home({required this.initialUser});
+  AdminHome({required this.initialUser});
 
   @override
-  _HomeState createState() => _HomeState(initialUser: initialUser);
+  _AdminHomeState createState() => _AdminHomeState(initialUser: initialUser);
 }
 
-class _HomeState extends State<Home> {
+class _AdminHomeState extends State<AdminHome> {
   final AuthService _auth = AuthService();
 
   final userDatabase = DatabaseService(uid: 'null');
@@ -44,7 +44,7 @@ class _HomeState extends State<Home> {
 
   final List<Message> initial = [Message(date: Timestamp.now())];
   TheUser? initialUser;
-  _HomeState({this.initialUser});
+  _AdminHomeState({this.initialUser});
 
   // DatabaseService().isAdmin(initialUser).then
 
