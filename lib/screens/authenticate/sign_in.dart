@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:fanpage/services/authentication.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:auth_buttons/auth_buttons.dart';
 
 class SignIn extends StatefulWidget {
   // const SignIn({Key? key}) : super(key: key);
@@ -33,7 +34,7 @@ class _SignInState extends State<SignIn> {
         : Scaffold(
             backgroundColor: Colors.brown[100],
             appBar: AppBar(
-              backgroundColor: Colors.brown[400],
+              backgroundColor: Colors.blue[900],
               elevation: 0.0,
               title: Text('Sign in to Nates Fans'),
               actions: <Widget>[
@@ -106,23 +107,26 @@ class _SignInState extends State<SignIn> {
                             style: TextStyle(color: Colors.white),
                           )),
                       SizedBox(height: 20.0),
-                      ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              primary: Colors.pink[400]),
-                          onPressed: () async {
-                            setState(() => loading = true);
-                            dynamic result = await _auth.signInWithGoogle();
-                            if (result == null) {
-                              print('error. Gooogle sign in resulted in null.');
-                              setState(() => loading = false);
-                            } else {
-                              print('Google sign in returned: $result');
-                            }
-                          },
-                          child: Text(
-                            "Google Sign In",
-                            style: TextStyle(color: Colors.white),
-                          )),
+                      GoogleAuthButton(
+                        onPressed: () async {
+                          setState(() => loading = true);
+                          dynamic result = await _auth.signInWithGoogle();
+                          if (result == null) {
+                            print('error. Gooogle sign in resulted in null.');
+                            setState(() => loading = false);
+                          } else {
+                            print('Google sign in returned: $result');
+                          }
+                        },
+                      ),
+                      // ElevatedButton(
+                      //     style: ElevatedButton.styleFrom(
+                      //         primary: Colors.pink[400]),
+                      //     onPressed: ()
+                      //     child: Text(
+                      //       "Google Sign In",
+                      //       style: TextStyle(color: Colors.white),
+                      //     )),
                       SizedBox(height: 20.0),
                       SizedBox(height: 12.0),
                       Text(
@@ -190,7 +194,6 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
   }
 }
 
-
 //  Future<void> _signInWithGoogle(AuthService _auth) async {
 //     try {
 //       UserCredential userCredential;
@@ -201,10 +204,8 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
 //       final googleAuthCredential = GoogleAuthProvider.credential(
 //         accessToken: googleAuth?.accessToken,
 //         idToken: googleAuth?.idToken,
-      
+
 //       userCredential = await _auth.signInWithCredential(googleAuthCredential);
-      
-      
 
 //       final user = userCredential.user;
 //       Scaffold.of(context).showSnackBar(SnackBar(

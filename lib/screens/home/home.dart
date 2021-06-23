@@ -88,10 +88,10 @@ class _HomeState extends State<Home> {
       value: DatabaseService().messages,
       initialData: initial,
       child: Scaffold(
-        backgroundColor: Colors.brown[50],
+        backgroundColor: Colors.blue[100],
         appBar: AppBar(
           title: Text("Nathan's Fans"),
-          backgroundColor: Colors.brown[400],
+          backgroundColor: Colors.blue[900],
           elevation: 0.0,
           actions: <Widget>[
             TextButton.icon(
@@ -235,14 +235,13 @@ class ConfirmationExit extends StatelessWidget {
   }
 }
 
-
 Widget _getFAB(TheUser? user) {
-    if (user.userRole != 'admin') {
-      return Container();
-    } else {
-      return FloatingActionButton(
-          backgroundColor: Colors.deepOrange[800],
-          child: Icon(Icons.add_shopping_cart),
-          onPressed: null);
-    }
+  if (user?.userRole != 'admin') {
+    return Container();
+  } else {
+    return FloatingActionButton(
+        backgroundColor: Colors.deepOrange[800],
+        child: Icon(Icons.add_shopping_cart),
+        onPressed: null);
   }
+}

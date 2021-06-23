@@ -31,29 +31,50 @@ class DatabaseService {
     });
   }
 
-  String findUserRole(TheUser? user) {
+  // Future<String> findUserRole(TheUser? user) async {
+  //   String uID = user?.uid ?? '';
+  //   if (uID != null) {
+  //     // DocumentSnapshot? result = await
+  //     userCollection.doc(uID).get().then((DocumentSnapshot documentSnapshot) {
+  //       if (documentSnapshot.exists) {
+  //         print('Document data: ${documentSnapshot.data()}');
+  //         dynamic role = documentSnapshot.get('userRole');
+  //         print("userRole = $role");
+  //         print('================================');
+  //         print('before TheUser change $user');
+  //         user?.userRole = role;
+  //         print('user role after change $user');
+  //         print('================================');
+  //         bool res = (role == 'admin');
+          
+  //         if (role == 'admin') {
+  //           return 'admin';
+  //         } else {
+  //           return 'Customer';
+  //         }
+
+  //         // return (role == 'admin');
+  //         // return true;
+  //       } else {
+  //         print('Document does not exist.');
+  //       }
+  //     });
+  //   }
+  //   return 'Customer';
+  // }
+
+  Future<String> findUserRole(TheUser? user) async {
     String uID = user?.uid ?? '';
     if (uID != null) {
-      // DocumentSnapshot? result = await
       userCollection.doc(uID).get().then((DocumentSnapshot documentSnapshot) {
         if (documentSnapshot.exists) {
           print('Document data: ${documentSnapshot.data()}');
-          dynamic role = documentSnapshot.get('userRole');
-          print("userRole = $role");
-          print('================================');
-          print('before TheUser change $user');
-          user?.userRole = role;
-          print('user role after change $user');
-          print('================================');
-          bool res = (role == 'admin');
+          dynamic role = documentSnapshot.get('userRole');          
           if (role == 'admin') {
             return 'admin';
           } else {
             return 'Customer';
           }
-
-          // return (role == 'admin');
-          // return true;
         } else {
           print('Document does not exist.');
         }
