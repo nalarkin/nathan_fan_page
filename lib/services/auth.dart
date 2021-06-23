@@ -2,31 +2,15 @@ import 'package:fanpage/models/user.dart';
 import 'package:fanpage/services/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:fanpage/services/database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final CollectionReference userCollection =
       FirebaseFirestore.instance.collection('users');
-  // Stream<TheUser?> get user {
-  //   return _auth.authStateChanges().listen((User? user) {
-  //     if (user == null) {
-  //       print('User is currently signed out!');
-  //       print('User is currently signed out!');
-  //       print('User is currently signed out!');
-  //       print('User is currently signed out!');
-  //       print('User is currently signed out!');
-  //       print('User is currently signed out!');
-  //       print('User is currently signed out!');
-  //     } else {
-  //       // return _userFromFirebase(user);
-  //     }
-  //   });
-  // }
 
   TheUser? _userFromFirebase(User? user) {
-    print("Pulling user: ${user} from FirebaseAuth");
+    print("Pulling user: $user from FirebaseAuth");
     return user != null
         ? TheUser(
             uid: user.uid,
@@ -46,41 +30,11 @@ class AuthService {
       UserCredential result = await _auth.signInAnonymously();
       User? currUser = result.user;
       return _userFromFirebase(currUser);
-      // return _userFromFirebase(currUser);
-      // FirebaseUser user = result.user;
-      // return user;
     } catch (e) {
       print(e.toString());
       return null;
     }
   }
-
-  // // sign in with email and password
-  // Future signInWithEmailAndPassword(String email, String password) async {
-  //   print(
-  //       'calling signInWithEmailAndPassword. email: $email password $password');
-  //   try {
-  //     UserCredential result = await _auth.signInWithEmailAndPassword(
-  //         email: email, password: password);
-
-  //     User? currUser = result.user;
-  //     TheUser? curr = _userFromFirebase(currUser);
-
-  //     FirebaseAuth.instance.currentUser;
-  //     print('User? currUser = $currUser');
-  //     String userRole = await findUserRole(curr);
-
-  //     print('userRole in auth.dart is ${userRole}');
-  //     print('User? currUser = $currUser');
-  //     if (userRole == 'admin') {
-  //       curr?.userRole = 'admin';
-  //     }
-  //     return curr;
-  //   } catch (e) {
-  //     print(e.toString());
-  //     return null;
-  //   }
-  // }
 
   // sign in with email and password
   Future signInWithEmailAndPassword(String email, String password) async {
@@ -97,37 +51,17 @@ class AuthService {
     }
   }
 
-  Future<String> findUserRole(TheUser? user) async {
-    String uID = user?.uid ?? '';
-    if (uID != null) {
-      // DocumentSnapshot? result = await
-      userCollection.doc(uID).get().then((DocumentSnapshot documentSnapshot) {
-        if (documentSnapshot.exists) {
-          print('Document data: ${documentSnapshot.data()}');
-          dynamic role = documentSnapshot.get('userRole');
-          print("userRole = $role");
-          print('================================');
-          print('before TheUser change $user');
-          user?.userRole = role;
-          print('user role after change $user');
-          print('================================');
-          bool res = (role == 'admin');
-
-          if (role == 'admin') {
-            print('USER IS ADMIN!!!!!');
-            return 'admin';
-          } else {
-            return 'Customer';
-          }
-
-          // return (role == 'admin');
-          // return true;
-        } else {
-          print('Document does not exist.');
-        }
+  Future createUserInDatabaseWithGoogle(User user) async {
+    List userName = user.displayName?.split(' ') ?? List.empty();
+    if (userName.length > 0) {
+      await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
+        'firstName': userName[0],
+        'lastName': userName[1],
+        'email': user.email,
+        'registrationDate': DateTime.now(),
+        'userRole': 'Customer',
       });
     }
-    return 'Customer';
   }
 
   Future<UserCredential?> signInWithGoogle() async {
@@ -141,8 +75,23 @@ class AuthService {
         accessToken: googleAuth?.accessToken,
         idToken: googleAuth?.idToken,
       );
+
       userCredential = await _auth.signInWithCredential(googleAuthCredential);
-      print("Signed in with google as {$userCredential}");
+      User? user = userCredential.user;
+      if (user != null) {
+        print(
+            'FirebaseUser creation time: ${user.metadata.creationTime} FirebaseUser lastSignInTime: ${user.metadata.lastSignInTime}');
+        // If it is a new user (signing in for the first time), create a user in the database
+        DateTime? creation = user.metadata.creationTime;
+        DateTime? lastSignIn = user.metadata.lastSignInTime;
+        if ((creation?.difference(lastSignIn ?? DateTime.now()).abs() ??
+                Duration(seconds: 2)) <
+            Duration(seconds: 1)) {
+          print('Creating new user in Database.');
+          createUserInDatabaseWithGoogle(user);
+        }
+      }
+      print("Signed in with google as {$user}");
       return userCredential;
     } catch (e) {
       print(e);
@@ -157,7 +106,7 @@ class AuthService {
           email: email, password: password);
       User? currUser = result.user;
       await DatabaseService(uid: currUser?.uid as String)
-          .setUserData(firstName, lastName, 'Customer');
+          .setUserData(firstName, lastName, 'Customer', email);
       return _userFromFirebase(currUser);
     } catch (e) {
       print(e.toString());

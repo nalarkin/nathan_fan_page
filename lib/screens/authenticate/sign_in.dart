@@ -2,9 +2,6 @@ import 'package:fanpage/services/auth.dart';
 import 'package:fanpage/shared/constants.dart';
 import 'package:fanpage/shared/loading.dart';
 import 'package:flutter/material.dart';
-import 'package:fanpage/services/authentication.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:auth_buttons/auth_buttons.dart';
 
 class SignIn extends StatefulWidget {
@@ -36,7 +33,7 @@ class _SignInState extends State<SignIn> {
             appBar: AppBar(
               backgroundColor: Colors.blue[900],
               elevation: 0.0,
-              title: Text('Sign in to Nates Fans'),
+              title: Text("Sign in to Nate's Fans"),
               actions: <Widget>[
                 TextButton.icon(
                     onPressed: () {
@@ -58,7 +55,7 @@ class _SignInState extends State<SignIn> {
                             textInputDecoration.copyWith(hintText: 'Email'),
                         validator: (val) {
                           return (val?.isEmpty as bool)
-                              ? 'Enter and email'
+                              ? 'Enter an email'
                               : null;
                         },
                         onChanged: (val) {
@@ -112,7 +109,7 @@ class _SignInState extends State<SignIn> {
                           setState(() => loading = true);
                           dynamic result = await _auth.signInWithGoogle();
                           if (result == null) {
-                            print('error. Gooogle sign in resulted in null.');
+                            print('Error. Gooogle sign in resulted in null.');
                             setState(() => loading = false);
                           } else {
                             print('Google sign in returned: $result');
@@ -128,60 +125,5 @@ class _SignInState extends State<SignIn> {
                     ],
                   ),
                 )));
-  }
-}
-
-class GoogleSignInButton extends StatefulWidget {
-  @override
-  _GoogleSignInButtonState createState() => _GoogleSignInButtonState();
-}
-
-class _GoogleSignInButtonState extends State<GoogleSignInButton> {
-  bool _isSigningIn = false;
-  final AuthService _auth = AuthService();
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 16.0),
-      child: _isSigningIn
-          ? CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-            )
-          : OutlinedButton(
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.white),
-                shape: MaterialStateProperty.all(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(40),
-                  ),
-                ),
-              ),
-              onPressed: () {}, ///////////// google sign in here
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Image(
-                      image: AssetImage("assets/google_logo.png"),
-                      height: 35.0,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10),
-                      child: Text(
-                        'Sign in with Google',
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.black54,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ),
-    );
   }
 }
