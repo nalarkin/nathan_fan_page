@@ -20,6 +20,12 @@
 * flutter 2.0+ is downloaded and installed
 * compatible on Android and Web (Chrome OS)
 
+## Admin Account Credentials (for testing)
+
+username: `abc@gmail.com`
+
+password: `arstarst`
+
 
 
 ## Web app specific requirements:

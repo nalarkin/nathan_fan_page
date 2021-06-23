@@ -2,7 +2,6 @@ import 'package:fanpage/models/user.dart';
 import 'package:fanpage/services/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:fanpage/services/database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AuthService {
@@ -11,7 +10,7 @@ class AuthService {
       FirebaseFirestore.instance.collection('users');
 
   TheUser? _userFromFirebase(User? user) {
-    print("Pulling user: ${user} from FirebaseAuth");
+    print("Pulling user: $user from FirebaseAuth");
     return user != null
         ? TheUser(
             uid: user.uid,
@@ -50,35 +49,6 @@ class AuthService {
     } catch (e) {
       print(e);
     }
-  }
-
-  Future<String> findUserRole(TheUser? user) async {
-    String uID = user?.uid ?? '';
-    if (uID != null) {
-      userCollection.doc(uID).get().then((DocumentSnapshot documentSnapshot) {
-        if (documentSnapshot.exists) {
-          print('Document data: ${documentSnapshot.data()}');
-          dynamic role = documentSnapshot.get('userRole');
-          print("userRole = $role");
-          print('================================');
-          print('before TheUser change $user');
-          user?.userRole = role;
-          print('user role after change $user');
-          print('================================');
-          bool res = (role == 'admin');
-
-          if (role == 'admin') {
-            print('USER IS ADMIN!!!!!');
-            return 'admin';
-          } else {
-            return 'Customer';
-          }
-        } else {
-          print('Document does not exist.');
-        }
-      });
-    }
-    return 'Customer';
   }
 
   Future createUserInDatabaseWithGoogle(User user) async {
@@ -121,7 +91,7 @@ class AuthService {
           createUserInDatabaseWithGoogle(user);
         }
       }
-      print("Signed in with google as {$userCredential}");
+      print("Signed in with google as {$user}");
       return userCredential;
     } catch (e) {
       print(e);

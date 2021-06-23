@@ -32,29 +32,29 @@ class DatabaseService extends ChangeNotifier {
     });
   }
 
-  bool get getAdmin {
-    return _isAdmin;
-  }
+  // bool get getAdmin {
+  //   return _isAdmin;
+  // }
 
-  void isAdmin(TheUser? user) async {
-    String uID = user?.uid ?? '1';
-    userCollection.doc(uID).get().then((DocumentSnapshot documentSnapshot) {
-      if (documentSnapshot.exists) {
-        print('Document data: ${documentSnapshot.data()}');
-        dynamic role = documentSnapshot.get('userRole');
-        if (role == 'admin') {
-          print('I CAN SEE ITS ADMIN!!');
+  // void isAdmin(TheUser? user) async {
+  //   String uID = user?.uid ?? '1';
+  //   userCollection.doc(uID).get().then((DocumentSnapshot documentSnapshot) {
+  //     if (documentSnapshot.exists) {
+  //       print('Document data: ${documentSnapshot.data()}');
+  //       dynamic role = documentSnapshot.get('userRole');
+  //       if (role == 'admin') {
+  //         print('I CAN SEE ITS ADMIN!!');
 
-          _isAdmin = true;
-          notifyListeners();
-        } else {
-          print('I CAN NOT SEE ITS ADMIN');
-        }
-      } else {
-        print('Document does not exist.');
-      }
-    });
-  }
+  //         _isAdmin = true;
+  //         notifyListeners();
+  //       } else {
+  //         print('I CAN NOT SEE ITS ADMIN');
+  //       }
+  //     } else {
+  //       print('Document does not exist.');
+  //     }
+  //   });
+  // }
 
   Future updateUserData(String firstName, String lastName) async {
     return await userCollection.doc(uid).set(

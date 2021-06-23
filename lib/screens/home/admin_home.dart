@@ -1,30 +1,15 @@
 import 'package:fanpage/models/user.dart';
-import 'package:fanpage/screens/home/message_form.dart';
 import 'package:fanpage/screens/home/settings_form.dart';
 import 'package:fanpage/services/auth.dart';
 import 'package:fanpage/shared/constants.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fanpage/services/database.dart';
 import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fanpage/screens/home/message_list.dart';
 import 'package:fanpage/models/message.dart';
-import 'package:provider/provider.dart';
-
-// Various ways to solve common  use cases
-// https://flutter.dev/docs/cookbook
-
-// Possible way to retrieve textfield input
-// https://flutter.dev/docs/cookbook/forms/retrieve-input
-
-// Way to route admin to create a message
-// https://flutter.dev/docs/cookbook/animation/page-route-animation#1-set-up-a-pageroutebuilder
-
-// way to
 
 class AdminHome extends StatefulWidget {
-  // const Home({Key? key}) : super(key: key);
   TheUser? initialUser;
   AdminHome({required this.initialUser});
 
@@ -36,64 +21,15 @@ class _AdminHomeState extends State<AdminHome> {
   final AuthService _auth = AuthService();
 
   final userDatabase = DatabaseService(uid: 'null');
-  // Future<bool> _isAdmin = Future.value(false);
   bool _isAdmin = true;
-
-  // Future.value(false).then(updateAdmin);
 
   final List<Message> initial = [Message(date: Timestamp.now())];
   TheUser? initialUser;
   _AdminHomeState({this.initialUser});
 
-  // DatabaseService().isAdmin(initialUser).then
-
-  // Future<bool> updateAdmin() async {
-  //   bool isAdmin = await userDatabase.isAdmin(context, initialUser);
-  //   print('isAdmin within updateAdmin() $isAdmin');
-  //   return isAdmin;
-  //   // return await userDatabase.isAdmin(initialUser);
-  //   // setState(() {
-  //   //   _isAdmin = isAdmin;
-  //   // });
-  // }
-
-  /* promising idea, isn't working :(. Value returned from updateAdmin is 
-    seen as false. But inside the method, it updateAdmin method, it reads a 
-    true value. */
-  // @override
-  // void initState() {
-  //   updateAdmin().then((val) {
-  //     print('val in initstate() is $val');
-  //     setState(() {
-  //       print('val in initstate() is $val');
-  //       _isAdmin = val;
-  //     });
-  //   }).onError((error, stackTrace) {
-  //     print(error);
-  //   });
-  //   super.initState();
-  // }
-
-  // updateAdmin();
-  // @override
-  // void initState() {
-  //   Future<bool> isAdmin = userDatabase.isAdmin(initialUser);
-  //   setState(() {
-  //     _isAdmin = isAdmin;
-  //   });
-  //   super.initState();
-  // }
-
   @override
   Widget build(BuildContext context) {
-    bool _isAdmin = userDatabase.getAdmin;
     final user = Provider.of<TheUser?>(context);
-    userDatabase.isAdmin(user);
-    // Future<bool> _isAdmin = DatabaseService().isAdmin(user?.uid);
-    // DatabaseService().findUserRole(user);
-    // findUserRole
-
-    print('_isAdmin in build method is = $_isAdmin');
     void _showSettingsPanel() {
       showModalBottomSheet(
           context: context,
@@ -285,16 +221,5 @@ class ConfirmationExit extends StatelessWidget {
       ),
       child: const Text('Show Dialog'),
     );
-  }
-}
-
-Widget _getFAB(TheUser? user) {
-  if (user?.userRole != 'admin') {
-    return Container();
-  } else {
-    return FloatingActionButton(
-        backgroundColor: Colors.deepOrange[800],
-        child: Icon(Icons.add_shopping_cart),
-        onPressed: null);
   }
 }
