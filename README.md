@@ -1,5 +1,7 @@
 # Nathan's Fan App
 
+`https://github.com/nalarkin/nathan_fan_page.git`
+
 ## How to run the App:
 
 1. Have all requirements downloaded
