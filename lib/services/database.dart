@@ -1,13 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fanpage/models/message.dart';
-import 'package:fanpage/models/user.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 
-class DatabaseService extends ChangeNotifier {
+class DatabaseService {
   final String? uid;
   DatabaseService({this.uid});
-  bool _isAdmin = false;
 
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
@@ -16,10 +12,6 @@ class DatabaseService extends ChangeNotifier {
 
   final CollectionReference messageCollection =
       FirebaseFirestore.instance.collection('messages');
-
-  Query qAdmins = FirebaseFirestore.instance
-      .collection('users')
-      .where("userRole", isEqualTo: "admin");
 
   Future setUserData(
       String firstName, String lastName, String userRole, String email) async {
@@ -31,30 +23,6 @@ class DatabaseService extends ChangeNotifier {
       'registrationDate': DateTime.now()
     });
   }
-
-  // bool get getAdmin {
-  //   return _isAdmin;
-  // }
-
-  // void isAdmin(TheUser? user) async {
-  //   String uID = user?.uid ?? '1';
-  //   userCollection.doc(uID).get().then((DocumentSnapshot documentSnapshot) {
-  //     if (documentSnapshot.exists) {
-  //       print('Document data: ${documentSnapshot.data()}');
-  //       dynamic role = documentSnapshot.get('userRole');
-  //       if (role == 'admin') {
-  //         print('I CAN SEE ITS ADMIN!!');
-
-  //         _isAdmin = true;
-  //         notifyListeners();
-  //       } else {
-  //         print('I CAN NOT SEE ITS ADMIN');
-  //       }
-  //     } else {
-  //       print('Document does not exist.');
-  //     }
-  //   });
-  // }
 
   Future updateUserData(String firstName, String lastName) async {
     return await userCollection.doc(uid).set(

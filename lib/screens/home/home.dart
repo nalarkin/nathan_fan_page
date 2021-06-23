@@ -10,8 +10,7 @@ import 'package:fanpage/screens/home/message_list.dart';
 import 'package:fanpage/models/message.dart';
 
 class Home extends StatefulWidget {
-  // const Home({Key? key}) : super(key: key);
-  TheUser? initialUser;
+  final TheUser? initialUser;
   Home({required this.initialUser});
 
   @override
