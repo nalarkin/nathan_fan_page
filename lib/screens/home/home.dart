@@ -163,28 +163,30 @@ class _HomeState extends State<Home> {
         body: Center(
           child: Messages(),
         ),
-        floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.add),
-          onPressed: () async {
-            print("user: ${user?.uid}");
-            // Future<bool> _new_isAdmin =
-            //     DatabaseService(uid: user?.uid).isAdmin();
-            // dynamic res = await DatabaseService().isAdmin(user?.uid);
-            // print('_isAdmin = $res');
-            // print(__isAdmin);
-            print(user);
-            // bool res = DatabaseService().isAdmin(user?.uid ?? '');
-            // print('qQuery within home.dart $res');
-            // print('_isAdmin = ${_isAdmin.toString()}');
-            // print('------------');
-            // print(user?.userRole);
+        floatingActionButton: user?.uid != 'l8fO4b6jVQa7p4qD3hFARHxTKtB2'
+            ? Container()
+            : FloatingActionButton(
+                child: Icon(Icons.add),
+                onPqressed: () async {
+                  print("user: ${user?.uid}");
+                  // Future<bool> _new_isAdmin =
+                  //     DatabaseService(uid: user?.uid).isAdmin();
+                  // dynamic res = await DatabaseService().isAdmin(user?.uid);
+                  // print('_isAdmin = $res');
+                  // print(__isAdmin);
+                  print(user);
+                  // bool res = DatabaseService().isAdmin(user?.uid ?? '');
+                  // print('qQuery within home.dart $res');
+                  // print('_isAdmin = ${_isAdmin.toString()}');
+                  // print('------------');
+                  // print(user?.userRole);
 
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => SecondRoute()),
-            );
-          },
-        ),
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SecondRoute()),
+                  );
+                },
+              ),
       ),
     );
   }
