@@ -1,6 +1,7 @@
 # Nathan's Fan App
 
 `https://github.com/nalarkin/nathan_fan_page.git`
+url is `https://github.com/nalarkin/nathan_fan_page`
 
 ## How to run the App:
 
